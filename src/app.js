@@ -1,5 +1,11 @@
 import { defaultStarAngles, projectSlides, projects } from './data/projects.js'
 
+const slideImageUrls = import.meta.glob('./assets/slides/**/*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+
 const grid = document.getElementById('projectGrid')
 const detailView = document.getElementById('detailView')
 const main = document.querySelector('main')
@@ -124,13 +130,21 @@ function renderDetail(id) {
   const project = projects.find((item) => item.id === id)
   if (!project) return
   const slides = projectSlides[id] || []
+  const slideMarkup = slides.map(([file, title], index) => {
+    const imagePath = `./assets/slides/${id}/${file}.png`
+    const imageUrl = slideImageUrls[imagePath]
+    if (!imageUrl) {
+      return `<div class="detail-empty"><strong>第 ${index + 1} 页暂时无法显示</strong><span>${title}</span></div>`
+    }
+    return `<figure class="portfolio-slide"><img src="${imageUrl}" alt="${project.title}：${title}（第 ${index + 1} 页，共 ${slides.length} 页）" loading="${index < 2 ? 'eager' : 'lazy'}" decoding="async"></figure>`
+  }).join('')
   main.hidden = true
   footer.hidden = true
   detailView.hidden = false
   detailView.innerHTML = `
     <div class="detail-top"><button class="detail-nav-button" data-back>← 返回宇宙</button><span>PROJECT ${project.index} / ${slides.length} BOARDS</span></div>
     <section class="slide-deck" aria-label="${project.title} 完整作品内容">
-      ${slides.length ? slides.map(([file, title], index) => `<figure class="portfolio-slide"><img src="src/assets/slides/${id}/${file}.png" alt="${project.title}：${title}（第 ${index + 1} 页，共 ${slides.length} 页）" loading="${index < 2 ? 'eager' : 'lazy'}" decoding="async"></figure>`).join('') : '<div class="detail-empty"><strong>作品内容正在整理中</strong><span>项目介绍已上线，完整展示页即将补充。</span></div>'}
+      ${slides.length ? slideMarkup : '<div class="detail-empty"><strong>作品内容正在整理中</strong><span>项目介绍已上线，完整展示页即将补充。</span></div>'}
     </section>
     <div class="detail-bottom"><button class="detail-nav-button" data-back>← 返回宇宙</button><div><strong>${project.title}</strong><span>${project.subtitle}</span></div><button class="space-button" data-next="${projects[(projects.findIndex((item) => item.id === id) + 1) % projects.length].id}">下一个项目 →</button></div>`
   detailView.querySelectorAll('[data-back]').forEach((button) => button.addEventListener('click', () => { location.hash = 'works' }))
