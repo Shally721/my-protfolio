@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="江晓丽的交互设计作品集——用研究理解人，用叙事连接产品。" />
+    <meta name="theme-color" content="#05050a" />
+    <title>江晓丽 · Interaction Designer</title>
+    <link rel="stylesheet" href="src/styles.css?v=20260901-5" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <button class="wordmark" data-scroll="home" aria-label="回到首页">XIAOLI<span>·</span>JIANG</button>
+        <nav aria-label="主导航">
+          <button data-scroll="works">作品</button>
+          <button data-scroll="about">关于我</button>
+          <button data-scroll="contact">联系方式</button>
+        </nav>
+        <span class="availability"><i></i> OPEN TO WORK · 2026</span>
+      </header>
+
+      <div class="detail-view" id="detailView" hidden></div>
+
+      <main>
+        <section class="cosmos" id="home" aria-labelledby="heroTitle">
+          <canvas class="starfield" id="starfield" aria-hidden="true"></canvas>
+          <div class="cosmos-glow" aria-hidden="true"></div>
+          <div class="scanlines" aria-hidden="true"></div>
+          <div class="hero-status"><p>PORTFOLIO / 2026</p><p>45.4642° N · 9.1900° E</p></div>
+
+          <h1 class="galaxy-title" id="heroTitle">
+            <span>在体验的星河里</span>
+            <em>寻找真实的人<i>。</i></em>
+          </h1>
+
+          <div class="hero-intro">
+            <p class="eyebrow">INTERACTION DESIGNER · MILAN</p>
+            <p>把情感洞察，变成真实发生的体验。<br />点亮一颗星，认识一个项目。</p>
+          </div>
+
+          <div class="galaxy-system" id="galaxySystem" aria-label="精选作品星座">
+            <svg class="galaxy-vortex" viewBox="0 0 1000 680" aria-hidden="true">
+              <g class="vortex-blue" fill="none">
+                <ellipse cx="500" cy="340" rx="455" ry="285" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="420" ry="258" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="382" ry="228" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="343" ry="200" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="304" ry="171" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="264" ry="143" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="223" ry="116" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="181" ry="89" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="138" ry="62" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="94" ry="37" pathLength="100" />
+              </g>
+              <g class="vortex-light" fill="none">
+                <ellipse cx="500" cy="340" rx="438" ry="271" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="360" ry="212" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="282" ry="156" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="201" ry="102" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="119" ry="50" pathLength="100" />
+              </g>
+              <g class="vortex-warm" fill="none">
+                <ellipse cx="500" cy="340" rx="330" ry="190" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="246" ry="132" pathLength="100" />
+                <ellipse cx="500" cy="340" rx="160" ry="76" pathLength="100" />
+              </g>
+            </svg>
+            <span class="little-person" aria-hidden="true"><i></i></span>
+            <span class="dust-star dust-one" aria-hidden="true"></span>
+            <span class="dust-star dust-two" aria-hidden="true"></span>
+            <span class="dust-star dust-three" aria-hidden="true"></span>
+            <div id="workStars" aria-label="三个精选作品星座"></div>
+          </div>
+
+          <aside class="project-dossier" id="projectDossier" aria-live="polite">
+            <div class="dossier-index">SELECT A STAR</div>
+            <h2>点亮一个作品</h2>
+            <p>选择星河中的任意一颗星，查看项目介绍。</p>
+            <div class="dossier-meta"><span id="dossierProjectCount">3 PROJECTS</span><span id="dossierBoardCount">52 BOARDS</span></div>
+          </aside>
+
+          <button class="scroll-cue" data-scroll="works" aria-label="向下查看全部作品"><span>SCROLL TO EXPLORE</span><i>↓</i></button>
+        </section>
+
+        <section class="section works" id="works">
+          <div class="section-kicker"><span>01</span><p>SELECTED ORBITS</p><p id="projectStats">3 PROJECTS · 52 BOARDS</p></div>
+          <div class="section-heading">
+            <h2>每个项目，<br /><em>都是一颗有引力的星体。</em></h2>
+            <p>从研究洞察到交互落地，沿着三条轨道查看我的完整设计过程。</p>
+          </div>
+          <div class="project-index" id="projectGrid"></div>
+        </section>
+
+        <section class="section about" id="about">
+          <div class="section-kicker"><span>02</span><p>ABOUT THE DESIGNER</p><p>MILAN / SHENZHEN</p></div>
+          <div class="about-hero">
+            <figure class="about-portrait">
+              <span class="portrait-word" aria-hidden="true">ABOUT</span>
+              <img src="src/assets/jiang-xiaoli-cutout.png" alt="交互设计师江晓丽" loading="lazy" />
+              <figcaption><span>JIANG XIAOLI</span><span>UX / INTERACTION DESIGNER</span></figcaption>
+            </figure>
+            <div class="about-intro">
+              <p class="eyebrow">HELLO, I'M XIAOLI</p>
+              <h2>在情感洞察与<br /><em>商业价值之间设计。</em></h2>
+              <p class="about-role">UX / 交互设计师 · 米兰理工大学数字交互设计硕士在读 · 2027 届</p>
+              <p>我从研究中找到真实需求，再把洞察转化为清晰、可落地的产品体验；尤其关注 AI 产品、软硬件协同与情感化设计。</p>
+              <div class="focus-strip" aria-label="核心能力"><span>情感洞察</span><span>商业思维</span><span>AI 全链路</span></div>
+              <div class="about-actions">
+                <a class="resume-link" href="src/assets/jiang-xiaoli-cv.pdf" target="_blank" rel="noreferrer">查看完整简历 <span>↗</span></a>
+                <span>BASED IN MILAN · AVAILABLE FOR INTERVIEWS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-resume">
+            <section class="resume-column resume-experience" aria-labelledby="experienceTitle">
+              <h3 id="experienceTitle"><span>01</span> EXPERIENCE</h3>
+              <article class="experience-item">
+                <div class="resume-heading">
+                  <div><strong>深圳市心感智影科技有限公司</strong><p>UX/UI 设计实习生 · AI 软硬件初创</p></div>
+                  <time>2026.05 — 2026.09</time>
+                </div>
+                <p class="experience-summary">负责 Odyss App、Pizza 营销页面与 IFA 深体验区的体验设计；结合用户研究、AIGC、Figma 与编程工具，推动方案从概念走向上线验证。</p>
+              </article>
+            </section>
+
+            <section class="resume-column" aria-labelledby="educationTitle">
+              <h3 id="educationTitle"><span>02</span> EDUCATION & AWARDS</h3>
+              <div class="education-item"><time>2025.09 — 2027.07</time><strong>米兰理工大学</strong><p>数字交互设计硕士（在读）<br />QS 艺术与设计排名世界第 7</p></div>
+              <div class="education-item"><time>2018.09 — 2022.06</time><strong>北京印刷学院</strong><p>视觉传达设计本科<br />国家奖学金 · 专业第一</p></div>
+              <div class="award-list">
+                <p><b>2024</b><span>UX Design Award 国际提名奖</span></p>
+                <p><b>2021</b><span>欧莱雅 Brandstorm 中国赛区 TOP 8</span></p>
+                <p><b>3 YEARS</b><span>连续三年专业第一 · 排名 1/260</span></p>
+              </div>
+            </section>
+
+            <section class="resume-column" aria-labelledby="capabilitiesTitle">
+              <h3 id="capabilitiesTitle"><span>03</span> CAPABILITIES</h3>
+              <div class="capability-group"><h4>设计能力</h4><p>交互设计 · 信息架构<br />用户研究 · 情感化设计</p></div>
+              <div class="capability-group"><h4>工具与工作流</h4><div class="skill-cloud"><span>Figma</span><span>Codex</span><span>Figma Make</span><span>GPT Image 2.0</span><span>RodinAI</span><span>Adobe CC</span></div></div>
+              <div class="capability-group"><h4>语言</h4><p>普通话 / 粤语 · 母语<br />英语 · B2，可流利口语</p></div>
+            </section>
+          </div>
+          <p class="about-footnote">RESEARCH WITH EMPATHY · DESIGN WITH RIGOR · BUILD WITH CURIOSITY</p>
+        </section>
+
+        <section class="section contact" id="contact">
+          <div class="contact-copy">
+            <div class="section-kicker"><span>03</span><p>ESTABLISH CONTACT</p><p>AVAILABLE NOW</p></div>
+            <p class="eyebrow">LET'S CONNECT</p>
+            <h2>下一段轨道，<br /><em>也许从这里开始。</em></h2>
+            <p>目前坐标米兰，可远程面试。欢迎聊聊产品、研究，或者一个还没成形的想法。</p>
+            <div class="contact-channel-grid">
+              <div class="contact-links">
+                <button class="contact-copy-button" data-copy="13311579771" data-copy-label="手机号">手机 133 1157 9771 <span>复制</span></button>
+                <button class="contact-copy-button" data-copy="jiangxiaoli721@gmail.com" data-copy-label="邮箱">jiangxiaoli721@gmail.com <span>复制</span></button>
+                <button class="contact-copy-button" data-copy="jiangxiaoli721" data-copy-label="微信号">微信号 jiangxiaoli721 <span>复制</span></button>
+              </div>
+              <figure class="wechat-card">
+                <img src="src/assets/wechat-qr.png" alt="江晓丽的微信二维码" loading="lazy" />
+              </figure>
+              <small id="copyFeedback" role="status"></small>
+            </div>
+          </div>
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="contact-rating">
+              <p class="contact-rating-kicker">A STAR FROM YOU</p>
+              <h3>看完之后，<br />为这片星河留一颗星。</h3>
+              <div class="rating-stars" role="radiogroup" aria-label="为作品集评分，满分五星">
+                <button type="button" role="radio" aria-checked="false" data-rating="1" aria-label="1 星">☆</button>
+                <button type="button" role="radio" aria-checked="false" data-rating="2" aria-label="2 星">☆</button>
+                <button type="button" role="radio" aria-checked="false" data-rating="3" aria-label="3 星">☆</button>
+                <button type="button" role="radio" aria-checked="false" data-rating="4" aria-label="4 星">☆</button>
+                <button type="button" role="radio" aria-checked="false" data-rating="5" aria-label="5 星">☆</button>
+              </div>
+              <p class="rating-feedback" id="ratingFeedback" role="status">选择一颗星完成评分</p>
+              <div class="rating-actions">
+                <button type="button" id="removeRating" hidden>撤回评分</button>
+                <button type="button" id="undoRating" hidden>撤销</button>
+              </div>
+            </div>
+            <label>评价或提升建议（选填）<textarea name="message" placeholder="哪一部分打动了你？还有什么可以做得更好？" rows="3"></textarea></label>
+            <p class="form-feedback error" id="formError" role="alert"></p>
+            <p class="form-feedback success" id="formSuccess" role="status"></p>
+            <button class="space-button submit-button" id="submitButton">提交反馈 <span>↗</span></button>
+          </form>
+          <div class="feedback-galaxy" id="feedbackGalaxy" aria-label="观众留下的星光">
+            <div class="feedback-galaxy-copy">
+              <span>LIGHTS LEFT BY VIEWERS</span>
+              <p id="feedbackGalaxyStatus" role="status">等待第一颗星落入这里</p>
+            </div>
+            <div class="feedback-orbit" aria-hidden="true">
+              <i></i><i></i><i></i>
+              <span class="feedback-star feedback-star-1" data-feedback-star="1"></span>
+              <span class="feedback-star feedback-star-2" data-feedback-star="2"></span>
+              <span class="feedback-star feedback-star-3" data-feedback-star="3"></span>
+              <span class="feedback-star feedback-star-4" data-feedback-star="4"></span>
+              <span class="feedback-star feedback-star-5" data-feedback-star="5"></span>
+            </div>
+          </div>
+          <aside class="rating-data" id="ratingData" hidden aria-labelledby="ratingDataTitle">
+            <div><p>LOCAL FEEDBACK DATA</p><h3 id="ratingDataTitle">当前浏览器评分与建议</h3></div>
+            <dl><div><dt>平均分</dt><dd id="ratingAverage">—</dd></div><div><dt>评分数</dt><dd id="ratingCount">0</dd></div><div><dt>最近更新</dt><dd id="ratingUpdated">—</dd></div></dl>
+            <p><strong>最近评价：</strong><span id="feedbackLatest">尚未提交评价或建议。</span><br />当前为本地预览版，只记录这个浏览器的数据。接入数据库后可汇总所有访客反馈。</p>
+          </aside>
+        </section>
+      </main>
+
+      <footer><span>© 2026 JIANG XIAOLI</span><span>DESIGNED WITH CURIOSITY · BUILT WITH CARE</span><a href="#rating-data">RATING DATA</a><button data-scroll="home">BACK TO ORBIT ↑</button></footer>
+    </div>
+    <script type="module" src="src/app.js?v=20260901-5"></script>
+  </body>
+</html>
