@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap');
 
 :root {
   font-family: Manrope, 'Noto Sans SC', 'PingFang SC', sans-serif;
@@ -96,6 +96,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     radial-gradient(circle at 85% 18%, rgba(73,35,171,.18), transparent 28%),
     linear-gradient(155deg, #05050a 0%, #060818 45%, #020207 100%);
 }
+.cosmos::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 26%, rgba(255, 184, 94, .16), transparent 21%),
+    radial-gradient(ellipse at 50% 32%, rgba(98, 134, 255, .15), transparent 47%);
+  mix-blend-mode: screen;
+}
 .starfield, .scanlines, .cosmos-glow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .starfield { z-index: -3; }
 .cosmos-glow {
@@ -175,32 +186,35 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .galaxy-title {
   position: absolute;
   z-index: 5;
-  top: 15.5%;
+  top: 14.5%;
   left: 3.6vw;
-  width: min(650px, 52vw);
+  width: min(720px, 57vw);
   margin: 0;
   color: rgba(244,242,236,.93);
-  font-family: Manrope, 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
-  font-size: clamp(38px, 4.1vw, 66px);
-  font-weight: 300;
-  line-height: 1.12;
-  letter-spacing: 0;
+  font-family: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  font-size: clamp(40px, 4.45vw, 72px);
+  font-weight: 400;
+  line-height: 1.03;
+  letter-spacing: .025em;
+  text-shadow: 0 0 24px rgba(164, 183, 255, .12);
   pointer-events: none;
 }
 .galaxy-title > span, .galaxy-title em { display: block; white-space: nowrap; }
 .galaxy-title > span {
   color: rgba(244,242,236,.9);
   font-size: 1em;
-  font-weight: 300;
+  font-weight: 400;
 }
 .galaxy-title em {
-  margin-top: .34em;
-  padding-left: 1.75em;
-  color: #9aa7ff;
-  font-size: .78em;
+  margin-top: .22em;
+  padding-left: 1.8em;
+  color: #f5f2e9;
+  font-size: .7em;
   font-style: normal;
-  font-weight: 500;
-  line-height: 1.18;
+  font-weight: 300;
+  letter-spacing: .1em;
+  line-height: 1.2;
+  text-shadow: 0 0 16px rgba(255, 229, 138, .16);
 }
 .galaxy-title i { color: inherit; font-style: normal; }
 
@@ -453,15 +467,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   object-position: center bottom;
   filter: saturate(.84) contrast(1.02) drop-shadow(0 22px 25px rgba(20,26,60,.12));
 }
-.portrait-word {
+.portrait-word, .portrait-name {
   position: absolute;
   z-index: 3;
   left: -3%;
-  top: 47%;
   color: #3048ff;
-  font: 600 clamp(34px, 3.5vw, 52px)/1 Manrope, sans-serif;
+  font-family: Manrope, 'Noto Sans SC', 'PingFang SC', sans-serif;
   letter-spacing: 0;
   pointer-events: none;
+}
+.portrait-word {
+  top: 47%;
+  font-size: clamp(34px, 3.5vw, 52px);
+  font-weight: 600;
+  line-height: 1;
+}
+.portrait-name {
+  top: calc(47% + clamp(38px, 4vw, 58px));
+  font-size: clamp(27px, 2.8vw, 40px);
+  font-weight: 500;
+  line-height: 1;
 }
 .about-portrait figcaption {
   position: relative;
@@ -527,7 +552,33 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .resume-heading strong, .education-item strong { display: block; color: #17171d; font-size: 17px; font-weight: 600; }
 .resume-heading p { margin: 5px 0 0; color: #626269; font-size: 11px; }
 .resume-heading time, .education-item time { flex: 0 0 auto; color: #76767e; font: 9px DM Mono, monospace; }
-.experience-summary { max-width: 660px; margin: 26px 0 0; color: #57575f; font-size: 12px; line-height: 1.82; }
+.experience-points {
+  display: grid;
+  gap: 16px;
+  max-width: 720px;
+  margin: 26px 0 0;
+  padding: 0;
+  color: #57575f;
+  font-size: 12px;
+  line-height: 1.78;
+  list-style: none;
+}
+.experience-points li {
+  position: relative;
+  padding-left: 22px;
+}
+.experience-points li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  top: .16em;
+  color: #3048ff;
+  font-size: 11px;
+}
+.experience-points strong {
+  color: #3048ff;
+  font-weight: 600;
+}
 .education-item { position: relative; padding: 0 0 22px; margin-bottom: 22px; border-bottom: 1px solid rgba(10,10,14,.14); }
 .education-item time { display: block; margin-bottom: 8px; }
 .education-item p { margin: 6px 0 0; color: #66666e; font-size: 11px; line-height: 1.7; }
