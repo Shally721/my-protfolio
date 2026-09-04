@@ -5,6 +5,11 @@ const slideImageUrls = import.meta.glob('./assets/slides/**/*.png', {
   query: '?url',
   import: 'default',
 })
+const mediaUrls = import.meta.glob('./assets/*.{png,mp4,mov}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
 
 const grid = document.getElementById('projectGrid')
 const detailView = document.getElementById('detailView')
@@ -16,6 +21,8 @@ const workStars = document.getElementById('workStars')
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const starAngles = { ...defaultStarAngles }
 let motionSequence = 0
+
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
 
 const totalBoards = projects.reduce((total, project) => total + project.pages, 0)
 document.getElementById('projectStats').textContent = `${projects.length} PROJECTS · ${totalBoards} BOARDS`
@@ -29,19 +36,37 @@ workStars.innerHTML = projects.map((project) => `
   </button>
 `).join('')
 
+function projectMediaMarkup(project) {
+  const media = project.media
+  if (!media) return '<div class="project-media-placeholder">MEDIA COMING SOON</div>'
+  if (media.type === 'video') {
+    const src = mediaUrls[media.src] || media.src
+    const poster = mediaUrls[media.poster] || media.poster
+    const mimeType = media.src.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'
+    return `<video class="project-media-video" autoplay muted loop playsinline preload="metadata" poster="${poster}"><source src="${src}" type="${mimeType}"></video>`
+  }
+  if (media.type === 'stack') {
+    return `<div class="project-media-stack">${media.images.map((src, index) => `<img src="${mediaUrls[src] || src}" alt="${project.title}：${media.label} ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">`).join('')}</div>`
+  }
+  return `<img class="project-media-image" src="${mediaUrls[media.src] || media.src}" alt="${project.title}：${media.label}" loading="lazy">`
+}
+
 grid.innerHTML = projects.map((project) => `
   <article class="project-row project-${project.id}">
-    <button class="project-glyph" data-project="${project.id}" aria-label="查看 ${project.title} 完整项目">
-      <span class="index-star" aria-hidden="true"></span><span class="preview-index">${project.index}</span>
-    </button>
     <div class="project-row-copy">
       <p class="project-meta">${project.meta} · ${project.pages} PAGES</p>
       <h3>${project.title}</h3>
       <p class="project-subtitle">${project.subtitle}</p>
       <p class="project-summary">${project.summary}</p>
       <div class="tag-list">${project.tags.map((tag) => `<span>${tag}</span>`).join('')}</div>
+      <button class="project-link" data-project="${project.id}" data-project-launch="${project.id}" aria-label="点亮星星并进入 ${project.title}">进入项目 <span class="entry-star" aria-hidden="true"><span class="entry-star-core"></span></span></button>
+      ${project.liveUrl ? `<div class="project-live-entry"><p>如果你也对这个项目感兴趣，欢迎点进来玩玩，上传一个属于你的披萨。</p><a href="${project.liveUrl}" target="_blank" rel="noreferrer">探索披萨世界 <span class="entry-star" aria-hidden="true"><span class="entry-star-core"></span></span></a></div>` : ''}
     </div>
-    <button class="project-arrow" data-project="${project.id}" aria-label="进入 ${project.title}">↗</button>
+    <button class="project-media" data-project="${project.id}" aria-label="查看 ${project.title} 完整项目">
+      <span class="project-media-index">${project.index}</span>
+      ${projectMediaMarkup(project)}
+      <span class="project-media-overlay">EXPLORE CASE STUDY <b>↗</b></span>
+    </button>
   </article>
 `).join('')
 
@@ -317,6 +342,7 @@ renderRatingState()
 
 function renderRoute() {
   const match = location.hash.match(/^#project\/(pizza|amber|timu)$/)
+  document.querySelector('.site-shell')?.classList.toggle('is-detail-route', Boolean(match))
   if (match) {
     renderDetail(match[1])
     return
@@ -324,11 +350,45 @@ function renderRoute() {
   detailView.hidden = true
   main.hidden = false
   footer.hidden = false
-  if (location.hash === '#works') requestAnimationFrame(() => document.getElementById('works').scrollIntoView())
+  if (location.hash === '#works') {
+    requestAnimationFrame(() => {
+      const worksSection = document.getElementById('works')
+      worksSection?.scrollIntoView({ behavior: 'instant', block: 'start' })
+      window.setTimeout(() => worksSection?.scrollIntoView({ behavior: 'instant', block: 'start' }), 80)
+    })
+  }
   updateRatingDataVisibility()
 }
 
 document.addEventListener('click', (event) => {
+  const launchTarget = event.target.closest('[data-project-launch]')
+  if (launchTarget) {
+    const id = launchTarget.dataset.projectLaunch
+    if (launchTarget.classList.contains('is-launching')) return
+    if (reduceMotion) {
+      location.hash = `project/${id}`
+      return
+    }
+    launchTarget.classList.add('is-launching')
+    const rect = launchTarget.getBoundingClientRect()
+    const meteor = document.createElement('span')
+    meteor.className = 'project-launch-meteor'
+    meteor.style.left = `${rect.left + rect.width / 2}px`
+    meteor.style.top = `${rect.top + rect.height / 2}px`
+    document.body.append(meteor)
+    const travelX = Math.max(280, window.innerWidth * .42)
+    const travelY = -Math.max(170, window.innerHeight * .32)
+    const angle = Math.atan2(travelY, travelX) * 180 / Math.PI
+    meteor.style.setProperty('--meteor-angle', `${angle}deg`)
+    meteor.style.setProperty('--meteor-x', `${travelX}px`)
+    meteor.style.setProperty('--meteor-y', `${travelY}px`)
+    window.setTimeout(() => {
+      meteor.remove()
+      location.hash = `project/${id}`
+      launchTarget.classList.remove('is-launching')
+    }, 820)
+    return
+  }
   const projectTarget = event.target.closest('[data-project]')
   if (projectTarget) location.hash = `project/${projectTarget.dataset.project}`
 })

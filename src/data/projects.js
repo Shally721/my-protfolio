@@ -3,16 +3,20 @@ export const projects = [
     id: 'pizza', index: '01', title: 'Global Pizza Camp', subtitle: '世界披萨阵营营销活动页',
     summary: '把 AI 识别饮食的项链与全球披萨玩法连接，设计一段从探索、表态到自然留存的品牌旅程。',
     tags: ['0→1 概念设计', '国际化', '全链路交互设计', '多端适配'], meta: '2026 · WEB + MOBILE', pages: 14, orbitAngle: 90,
+    media: { type: 'video', src: './assets/pizza-demo.mp4', poster: './assets/pizza-cover.png', label: 'Pizza 交互录屏' },
+    liveUrl: 'https://pizza-test.odyss.life/',
   },
   {
     id: 'amber', index: '02', title: 'City Amber', subtitle: '小红书城市情感记忆地图',
     summary: '将城市里的情感瞬间变成可探索的地理坐标，打通情感留存与本地生活商业闭环。',
     tags: ['本地生活', '用研驱动决策', '业务增长导向', '创新设计'], meta: '2026 · PRODUCT CONCEPT', pages: 22, orbitAngle: 330,
+    media: { type: 'image', src: './assets/amber-cover.png', label: 'City Amber 视觉方案' },
   },
   {
     id: 'timu', index: '03', title: 'Meet Timu', subtitle: '变色龙健康习惯伴侣',
     summary: '用光呼吸代替通知，用城堡崩塌对抗拖延，让健康习惯成为看得见的成就。',
     tags: ['AIGC 工作流', '情感设计', '0→1 概念设计', '软硬件协同'], meta: '2025—2026 · PRODUCT + DEVICE', pages: 16, orbitAngle: 210,
+    media: { type: 'image', src: './assets/timu-cover.png', label: 'Timu AI 沉浸式任务场景' },
   },
 ]
 
