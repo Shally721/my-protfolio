@@ -125,7 +125,7 @@ function App() {
         </section>
 
         <section className="section contact" id="contact">
-          <div className="contact-copy"><p className="eyebrow">LET'S CONNECT</p><h2>有项目想聊？<br /><em>我在这里。</em></h2><p>目前坐标米兰，可远程面试。欢迎聊聊产品、研究，或者一个还没成形的想法。</p><div className="contact-links"><a href="mailto:jiangxiaoli721@gmail.com">jiangxiaoli721@gmail.com <span>↗</span></a><a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a></div></div>
+          <div className="contact-copy"><p className="eyebrow">LET'S CONNECT</p><h2>有项目想聊？<br /><em>我在这里。</em></h2><p>目前坐标米兰，可远程面试。欢迎找我聊聊，期待一起共事。</p><div className="contact-links"><a href="mailto:jiangxiaoli721@gmail.com">jiangxiaoli721@gmail.com <span>↗</span></a><a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a></div></div>
           <form className="contact-form" onSubmit={handleSubmit} noValidate>
             <label>你的称呼<input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="怎么称呼你？" disabled={formState === 'loading'} /></label>
             <label>邮箱地址<input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" disabled={formState === 'loading'} /></label>

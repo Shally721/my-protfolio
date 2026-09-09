@@ -5,7 +5,7 @@ const slideImageUrls = import.meta.glob('./assets/slides/**/*.png', {
   query: '?url',
   import: 'default',
 })
-const mediaUrls = import.meta.glob('./assets/*.{png,mp4,mov}', {
+const mediaUrls = import.meta.glob('./assets/**/*.{png,mp4,mov}', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -154,14 +154,21 @@ window.addEventListener('resize', placeStars)
 function renderDetail(id) {
   const project = projects.find((item) => item.id === id)
   if (!project) return
+  detailView.classList.toggle('is-component-detail', id === 'components')
   const slides = projectSlides[id] || []
   const slideMarkup = slides.map(([file, title], index) => {
-    const imagePath = `./assets/slides/${id}/${file}.png`
-    const imageUrl = slideImageUrls[imagePath]
+    const imagePath = file.includes('/')
+      ? `./assets/${file}.png`
+      : `./assets/slides/${id}/${file}.png`
+    const imageUrl = slideImageUrls[imagePath] || mediaUrls[imagePath]
     if (!imageUrl) {
       return `<div class="detail-empty"><strong>第 ${index + 1} 页暂时无法显示</strong><span>${title}</span></div>`
     }
-    return `<figure class="portfolio-slide"><img src="${imageUrl}" alt="${project.title}：${title}（第 ${index + 1} 页，共 ${slides.length} 页）" loading="${index < 2 ? 'eager' : 'lazy'}" decoding="async"></figure>`
+    const isComponentSlide = file.startsWith('component-library/')
+    const naturalRatioClass = file.includes('/') ? ' portfolio-slide--natural' : ''
+    const nativeWidthClass = isComponentSlide ? ' portfolio-slide--component' : ''
+    const loading = file.includes('/') || index < 2 ? 'eager' : 'lazy'
+    return `<figure class="portfolio-slide${naturalRatioClass}${nativeWidthClass}"><img src="${imageUrl}" alt="${project.title}：${title}（第 ${index + 1} 页，共 ${slides.length} 页）" loading="${loading}" fetchpriority="${file.includes('/') ? 'high' : 'auto'}" decoding="async"></figure>`
   }).join('')
   main.hidden = true
   footer.hidden = true
@@ -341,7 +348,7 @@ undoRatingButton.addEventListener('click', () => {
 renderRatingState()
 
 function renderRoute() {
-  const match = location.hash.match(/^#project\/(pizza|amber|timu)$/)
+  const match = location.hash.match(/^#project\/(pizza|components|amber|timu)$/)
   document.querySelector('.site-shell')?.classList.toggle('is-detail-route', Boolean(match))
   if (match) {
     renderDetail(match[1])
