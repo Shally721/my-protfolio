@@ -151,12 +151,31 @@ placeStars()
 updateDossier('pizza')
 window.addEventListener('resize', placeStars)
 
+function renderVideoSlide(project, slide, index, total) {
+  const videoUrl = mediaUrls[slide.src]
+  const posterUrl = slide.poster ? mediaUrls[slide.poster] : ''
+  if (!videoUrl) {
+    return `<div class="detail-empty"><strong>第 ${index + 1} 页暂时无法显示</strong><span>${slide.title}</span></div>`
+  }
+  return `<figure class="portfolio-slide video-slide" aria-label="${project.title}：${slide.title}（第 ${index + 1} 页，共 ${total} 页）">
+      <figcaption class="video-slide__header">
+        <span class="video-slide__label">${slide.label}</span>
+        <strong class="video-slide__title">${slide.title}</strong>
+      </figcaption>
+      <div class="video-slide__frame">
+        <video src="${videoUrl}"${posterUrl ? ` poster="${posterUrl}"` : ''} autoplay muted loop playsinline preload="auto" aria-label="${slide.title} 交互录屏"></video>
+      </div>
+    </figure>`
+}
+
 function renderDetail(id) {
   const project = projects.find((item) => item.id === id)
   if (!project) return
   detailView.classList.toggle('is-component-detail', id === 'components')
   const slides = projectSlides[id] || []
-  const slideMarkup = slides.map(([file, title], index) => {
+  const slideMarkup = slides.map((slide, index) => {
+    if (!Array.isArray(slide)) return renderVideoSlide(project, slide, index, slides.length)
+    const [file, title] = slide
     const imagePath = file.includes('/')
       ? `./assets/${file}.png`
       : `./assets/slides/${id}/${file}.png`
