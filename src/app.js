@@ -367,7 +367,8 @@ undoRatingButton.addEventListener('click', () => {
 renderRatingState()
 
 function renderRoute() {
-  const match = location.hash.match(/^#project\/(pizza|components|amber|timu)$/)
+  const routeMatch = location.hash.match(/^#project\/([\w-]+)$/)
+  const match = routeMatch && projects.some((item) => item.id === routeMatch[1]) ? routeMatch : null
   document.querySelector('.site-shell')?.classList.toggle('is-detail-route', Boolean(match))
   if (match) {
     renderDetail(match[1])
