@@ -1050,6 +1050,8 @@ footer a:hover { color: #fff; }
 .project-pizza .project-media { aspect-ratio: 3024 / 1658; }
 .project-components .project-media { aspect-ratio: 16 / 10; background: #f1eee8; }
 .project-components .project-media-image { object-fit: cover; object-position: top center; }
+/* Cards whose box follows the cover's own ratio: let the image fill edge to edge, no letterbox bands */
+.project-media--fitted .project-media-image { aspect-ratio: auto; object-fit: cover; }
 .project-media::after {
   content: '';
   position: absolute;

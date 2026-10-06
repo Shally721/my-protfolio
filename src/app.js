@@ -62,7 +62,7 @@ grid.innerHTML = projects.map((project) => `
       <button class="project-link" data-project="${project.id}" data-project-launch="${project.id}" aria-label="点亮星星并进入 ${project.title}">进入项目 <span class="entry-star" aria-hidden="true"><span class="entry-star-core"></span></span></button>
       ${project.liveUrl ? `<div class="project-live-entry"><p>如果你也对这个项目感兴趣，欢迎点进来玩玩，上传一个属于你的披萨。</p><a href="${project.liveUrl}" target="_blank" rel="noreferrer">探索披萨世界 <span class="entry-star" aria-hidden="true"><span class="entry-star-core"></span></span></a></div>` : ''}
     </div>
-    <button class="project-media" data-project="${project.id}" aria-label="查看 ${project.title} 完整项目">
+    <button class="project-media${project.media?.ratio ? ' project-media--fitted' : ''}" data-project="${project.id}" aria-label="查看 ${project.title} 完整项目"${project.media?.ratio ? ` style="aspect-ratio: ${project.media.ratio}"` : ''}>
       <span class="project-media-index">${project.index}</span>
       ${projectMediaMarkup(project)}
       <span class="project-media-overlay">EXPLORE CASE STUDY <b>↗</b></span>

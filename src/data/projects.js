@@ -10,7 +10,7 @@ export const projects = [
     id: 'ifa', index: '02', title: 'ODYSS × IFA 2026', subtitle: '智能项链德国 IFA 展会沉浸式 Demo',
     summary: '为 ODYSS 智能项链设计 IFA 2026 展会 Demo：用 8 个真实生活角色替代繁琐建档，配合预填充数据与锁屏 Live Activity，让观众在 5 分钟内体验无感饮食追踪的完整价值。',
     tags: ['系统思维', '叙事设计', '全链路交互设计'], meta: '2026 · IFA BERLIN · APP DEMO', pages: 12, orbitAngle: 30,
-    media: { type: 'image', src: './assets/slides/ifa/01-cover.png', label: 'ODYSS × IFA 2026 项目封面' },
+    media: { type: 'image', src: './assets/slides/ifa/01-cover.png', label: 'ODYSS × IFA 2026 项目封面', ratio: '3840 / 2160' },
   },
   {
     id: 'components', index: '03', title: 'Odyss Components', subtitle: 'AI 软硬件产品Odyss组件库搭建',
@@ -22,13 +22,13 @@ export const projects = [
     id: 'amber', index: '04', title: 'City Amber', subtitle: '小红书城市情感记忆地图',
     summary: '将城市里的情感瞬间变成可探索的地理坐标，打通情感留存与本地生活商业闭环。',
     tags: ['本地生活', '用研驱动决策', '业务增长导向', '创新设计'], meta: '2026 · PRODUCT CONCEPT', pages: 22, orbitAngle: 330,
-    media: { type: 'image', src: './assets/amber-cover.png', label: 'City Amber 视觉方案' },
+    media: { type: 'image', src: './assets/amber-cover.png', label: 'City Amber 视觉方案', ratio: '2172 / 1442' },
   },
   {
     id: 'timu', index: '05', title: 'Meet Timu', subtitle: '变色龙健康习惯伴侣',
     summary: '用光呼吸代替通知，用城堡崩塌对抗拖延，让健康习惯成为看得见的成就。',
     tags: ['AIGC 工作流', '情感设计', '0→1 概念设计', '软硬件协同'], meta: '2025—2026 · PRODUCT + DEVICE', pages: 16, orbitAngle: 210,
-    media: { type: 'image', src: './assets/timu-cover.png', label: 'Timu AI 沉浸式任务场景' },
+    media: { type: 'image', src: './assets/timu-cover.png', label: 'Timu AI 沉浸式任务场景', ratio: '3162 / 1770' },
   },
 ]
 
