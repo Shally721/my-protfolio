@@ -596,7 +596,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .award-list a { color: #17171d; font-weight: 600; text-decoration: underline; text-decoration-color: rgba(48,72,255,.45); text-underline-offset: 4px; transition: color .2s, text-decoration-color .2s; }
 .award-list a span { color: #3048ff; margin-left: 4px; }
 .award-list a:hover, .award-list a:focus-visible { color: #3048ff; text-decoration-color: #3048ff; }
-.award-list .award-project { display: inline-block; width: 100%; margin-top: 3px; color: #6e6e76; font-size: 13px; font-weight: 400; }
+.award-list .award-project { display: inline-block; width: 100%; margin-left: 0; margin-top: 3px; color: #6e6e76; font-size: 13px; font-weight: 400; }
 .award-list small { color: #6e6e76; font-size: 12px; }
 .about .skill-cloud span { color: #393942; border-color: rgba(10,10,14,.24); }
 .capability-group + .capability-group { margin-top: 30px; }
