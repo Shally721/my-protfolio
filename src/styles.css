@@ -600,7 +600,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .award-list small { color: #6e6e76; font-size: 12px; }
 .about .skill-cloud span { color: #393942; border-color: rgba(10,10,14,.24); }
 .capability-group + .capability-group { margin-top: 30px; }
-.capability-group h4 { margin: 0 0 12px; color: #66666e; font: 500 14px Manrope, 'Noto Sans SC', 'PingFang SC', sans-serif; letter-spacing: .02em; }
+.capability-group h4 { margin: 0 0 14px; color: #8d8d95; font: 400 13px Manrope, 'Noto Sans SC', 'PingFang SC', sans-serif; letter-spacing: .08em; }
 .capability-group p { margin: 0; color: #34343b; font-size: 15px; line-height: 1.9; }
 .capability-group .skill-cloud { gap: 8px; }
 .capability-group .skill-cloud span { padding: 6px 10px; font-size: 13px; }
