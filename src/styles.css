@@ -425,7 +425,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     #ecece7;
   color: #111118;
 }
-.about .section-kicker { color: #77777d; border-color: rgba(10,10,14,.2); }
+.about .section-kicker { color: #66666e; border-color: rgba(10,10,14,.2); font-size: 12px; }
 .about-hero {
   display: grid;
   grid-template-columns: minmax(330px, .82fr) minmax(430px, 1.18fr);
@@ -504,10 +504,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   padding-top: 15px;
   border-top: 1px solid rgba(10,10,14,.28);
   color: #66666e;
-  font: 9px DM Mono, monospace;
+  font: 12px DM Mono, monospace;
   letter-spacing: .08em;
 }
-.about-intro .eyebrow { color: #3048ff; }
+.about-intro .eyebrow { color: #3048ff; font-size: 13px; }
 .about-intro h2 {
   max-width: 780px;
   margin: 0 0 26px;
@@ -518,10 +518,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   letter-spacing: 0;
 }
 .about-intro h2 em { color: #3048ff; font-style: normal; font-weight: 300; }
-.about-intro > p:not(.eyebrow) { max-width: 720px; margin: 13px 0; color: #5a5a61; font-size: 14px; line-height: 1.85; }
+.about-intro > p:not(.eyebrow) { max-width: 720px; margin: 14px 0; color: #4a4a52; font-size: 16px; line-height: 1.85; }
 .about-intro .about-role { color: #191920 !important; font-weight: 500; }
 .focus-strip { display: flex; flex-wrap: wrap; gap: 0; margin-top: 24px; border-top: 1px solid rgba(10,10,14,.2); border-bottom: 1px solid rgba(10,10,14,.2); }
-.focus-strip span { flex: 1 1 120px; padding: 12px 15px 12px 0; color: #3048ff; font: 9px DM Mono, monospace; }
+.focus-strip span { flex: 1 1 120px; padding: 14px 15px 14px 0; color: #3048ff; font: 500 15px/1.4 Manrope, 'Noto Sans SC', 'PingFang SC', sans-serif; }
 .focus-strip span + span { padding-left: 15px; border-left: 1px solid rgba(10,10,14,.2); }
 .about-actions { display: flex; align-items: center; gap: 26px; margin-top: 32px; }
 .resume-link {
@@ -532,16 +532,16 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   padding: 13px 15px;
   color: #fff;
   background: #233cff;
-  font: 10px DM Mono, monospace;
+  font: 500 15px Manrope, 'Noto Sans SC', 'PingFang SC', sans-serif;
   text-decoration: none;
   transition: background .2s, transform .2s;
 }
 .resume-link:hover { background: #0c0c12; transform: translateY(-2px); }
 .resume-link span { color: #c9ff4e; }
-.about-actions > span { color: #85858b; font: 8px/1.5 DM Mono, monospace; letter-spacing: .08em; }
+.about-actions > span { color: #6e6e76; font: 12px/1.5 DM Mono, monospace; letter-spacing: .06em; }
 .about-resume {
   display: grid;
-  grid-template-columns: minmax(420px, 1.35fr) minmax(260px, .82fr) minmax(240px, .68fr);
+  grid-template-columns: minmax(380px, 1.2fr) minmax(320px, 1fr) minmax(240px, .7fr);
   border-top: 1px solid rgba(10,10,14,.3);
   border-bottom: 1px solid rgba(10,10,14,.3);
 }
@@ -552,14 +552,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   gap: 14px;
   margin: 0 0 38px;
   color: #626269;
-  font: 9px DM Mono, monospace;
+  font: 13px DM Mono, monospace;
   letter-spacing: .1em;
 }
 .resume-column h3 span { color: #3048ff; }
 .resume-heading { display: flex; justify-content: space-between; gap: 24px; }
-.resume-heading strong, .education-item strong { display: block; color: #17171d; font-size: 17px; font-weight: 600; }
-.resume-heading p { margin: 5px 0 0; color: #626269; font-size: 11px; }
-.resume-heading time, .education-item time { flex: 0 0 auto; color: #76767e; font: 9px DM Mono, monospace; }
+.resume-heading strong, .education-item strong { display: block; color: #17171d; font-size: 21px; font-weight: 600; }
+.resume-heading p { margin: 6px 0 0; color: #55555c; font-size: 14px; }
+.resume-heading time, .education-item time { flex: 0 0 auto; color: #66666e; font: 13px DM Mono, monospace; font-variant-numeric: tabular-nums; }
 .experience-points {
   display: grid;
   gap: 16px;
@@ -567,7 +567,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   margin: 26px 0 0;
   padding: 0;
   color: #57575f;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.78;
   list-style: none;
 }
@@ -581,7 +581,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   left: 0;
   top: .16em;
   color: #3048ff;
-  font-size: 11px;
+  font-size: 13px;
 }
 .experience-points strong {
   color: #3048ff;
@@ -589,18 +589,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .education-item { position: relative; padding: 0 0 22px; margin-bottom: 22px; border-bottom: 1px solid rgba(10,10,14,.14); }
 .education-item time { display: block; margin-bottom: 8px; }
-.education-item p { margin: 6px 0 0; color: #66666e; font-size: 11px; line-height: 1.7; }
-.award-list { display: grid; gap: 15px; }
-.award-list p { display: grid; grid-template-columns: 58px 1fr; gap: 9px; margin: 0; color: #44444b; font-size: 11px; line-height: 1.5; }
-.award-list b { color: #3048ff; font: 8px DM Mono, monospace; }
-.award-list small { color: #85858c; font-size: 9px; }
+.education-item p { margin: 8px 0 0; color: #55555c; font-size: 14px; line-height: 1.75; }
+.award-list { display: grid; gap: 18px; }
+.award-list p { display: grid; grid-template-columns: 64px 1fr; align-items: baseline; gap: 12px; margin: 0; color: #34343b; font-size: 15px; line-height: 1.55; }
+.award-list b { color: #3048ff; font: 13px DM Mono, monospace; font-variant-numeric: tabular-nums; }
+.award-list a { color: #17171d; font-weight: 600; text-decoration: underline; text-decoration-color: rgba(48,72,255,.45); text-underline-offset: 4px; transition: color .2s, text-decoration-color .2s; }
+.award-list a span { color: #3048ff; margin-left: 4px; }
+.award-list a:hover, .award-list a:focus-visible { color: #3048ff; text-decoration-color: #3048ff; }
+.award-list .award-project { display: inline-block; width: 100%; margin-top: 3px; color: #6e6e76; font-size: 13px; font-weight: 400; }
+.award-list small { color: #6e6e76; font-size: 12px; }
 .about .skill-cloud span { color: #393942; border-color: rgba(10,10,14,.24); }
 .capability-group + .capability-group { margin-top: 30px; }
-.capability-group h4 { margin: 0 0 11px; color: #77777e; font: 8px DM Mono, monospace; letter-spacing: .08em; }
-.capability-group p { margin: 0; color: #4f4f56; font-size: 11px; line-height: 1.9; }
-.capability-group .skill-cloud { gap: 6px; }
-.capability-group .skill-cloud span { padding: 5px 7px; font-size: 8px; }
-.about-footnote { margin: 19px 0 0; color: #88888f; font: 8px DM Mono, monospace; letter-spacing: .1em; text-align: right; }
+.capability-group h4 { margin: 0 0 12px; color: #66666e; font: 500 14px Manrope, 'Noto Sans SC', 'PingFang SC', sans-serif; letter-spacing: .02em; }
+.capability-group p { margin: 0; color: #34343b; font-size: 15px; line-height: 1.9; }
+.capability-group .skill-cloud { gap: 8px; }
+.capability-group .skill-cloud span { padding: 6px 10px; font-size: 13px; }
+.about-footnote { margin: 22px 0 0; color: #6e6e76; font: 12px DM Mono, monospace; letter-spacing: .08em; text-align: right; }
 
 .contact {
   display: grid;
@@ -916,7 +920,7 @@ footer a:hover { color: #fff; }
   .planet-pizza .planet-label { left: 5%; }
   .project-dossier { bottom: 28px; width: calc(100% - 10vw); }
   .about-actions { align-items: flex-start; flex-direction: column; }
-  .about-portrait figcaption { font-size: 8px; }
+  .about-portrait figcaption { font-size: 12px; }
   .resume-heading { display: grid; gap: 8px; }
   .focus-strip span { flex-basis: 33.333%; padding-left: 8px; padding-right: 8px; text-align: center; }
   .section-kicker { grid-template-columns: 28px 1fr; }

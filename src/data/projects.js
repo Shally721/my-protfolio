@@ -28,7 +28,7 @@ export const projects = [
     id: 'timu', index: '05', title: 'Meet Timu', subtitle: '变色龙健康习惯伴侣',
     summary: '用光呼吸代替通知，用城堡崩塌对抗拖延，让健康习惯成为看得见的成就。',
     tags: ['AIGC 工作流', '情感设计', '0→1 概念设计', '软硬件协同'], meta: '2025—2026 · PRODUCT + DEVICE', pages: 16, orbitAngle: 210,
-    media: { type: 'image', src: './assets/timu-cover.png', label: 'Timu AI 沉浸式任务场景', ratio: '3162 / 1770' },
+    media: { type: 'image', src: './assets/slides/timu/01-715.png', label: 'Meet Timu 项目封面', ratio: '3840 / 2160' },
   },
 ]
 
