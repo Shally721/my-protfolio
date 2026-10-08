@@ -7,6 +7,15 @@
 }
 
 @font-face {
+  font-family: 'DongshuSuanxing';
+  /* Subset to the characters used in the Chinese display headings only (full font is 19.6MB) */
+  src: url('./assets/fonts/DongshuSuanxing-headings.woff2') format('woff2');
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
   font-family: 'Valky';
   src: url('./assets/fonts/Valky-Regular.woff2') format('woff2'), url('./assets/fonts/Valky-Regular.otf') format('opentype');
   font-display: swap;
@@ -246,7 +255,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   text-shadow: 0 0 16px rgba(255, 229, 138, .16);
 }
 .galaxy-title i { color: inherit; font-style: normal; }
-/* English display headings use Valky; Chinese keeps the handwritten face */
+/* Chinese display headings: Dongshu Suanxing, handwritten face as fallback; English uses Valky */
+:lang(zh-CN) .galaxy-title, :lang(zh-CN) .section-heading h2, :lang(zh-CN) .contact h2, :lang(zh-CN) .about-intro h2 { font-family: 'DongshuSuanxing', 'MFNianZhenNoncommercial', Manrope, 'Noto Sans SC', 'PingFang SC', sans-serif; }
+/* Dongshu Suanxing sets wider than the handwritten face: size down so each heading keeps its two lines */
+:lang(zh-CN) .section-heading h2, :lang(zh-CN) .contact h2, :lang(zh-CN) .about-intro h2 { line-height: 1.18; }
+:lang(zh-CN) .section-heading h2 em, :lang(zh-CN) .contact h2 em, :lang(zh-CN) .about-intro h2 em { display: inline-block; margin-top: .12em; }
+:lang(zh-CN) .section-heading h2 { font-size: clamp(34px, 3.8vw, 58px); }
+:lang(zh-CN) .contact h2 { font-size: clamp(38px, 4.4vw, 64px); }
+:lang(zh-CN) .about-intro h2 { font-size: clamp(36px, 4.2vw, 62px); }
+:lang(zh-CN) .galaxy-title { font-size: clamp(42px, 4.6vw, 74px); }
+@media (max-width: 760px) {
+  :lang(zh-CN) .section-heading h2, :lang(zh-CN) .contact h2 { font-size: clamp(30px, 8vw, 44px); }
+  :lang(zh-CN) .about-intro h2 { font-size: clamp(32px, 8.6vw, 48px); }
+  :lang(zh-CN) .galaxy-title { font-size: clamp(32px, 9vw, 44px); }
+}
 :lang(en) .galaxy-title, :lang(en) .section-heading h2, :lang(en) .contact h2, :lang(en) .about-intro h2 { font-family: 'Valky', Manrope, 'Noto Sans SC', sans-serif; letter-spacing: 0; }
 :lang(en) .galaxy-title { font-size: clamp(40px, 4.4vw, 72px); }
 :lang(en) .galaxy-title em { letter-spacing: .01em; }
