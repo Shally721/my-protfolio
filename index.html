@@ -11,13 +11,19 @@
   <body>
     <div class="site-shell">
       <header class="topbar">
-        <button class="wordmark" data-scroll="home" aria-label="回到首页">XIAOLI<span>·</span>JIANG</button>
-        <nav aria-label="主导航">
-          <button data-scroll="works">作品</button>
-          <button data-scroll="about">关于我</button>
-          <button data-scroll="contact">联系方式</button>
+        <button class="wordmark" data-scroll="home" aria-label="回到首页" data-i18n-attr="aria-label:nav.home">XIAOLI<span>·</span>JIANG</button>
+        <nav aria-label="主导航" data-i18n-attr="aria-label:nav.label">
+          <button data-scroll="works" data-i18n="nav.works">作品</button>
+          <button data-scroll="about" data-i18n="nav.about">关于我</button>
+          <button data-scroll="contact" data-i18n="nav.contact">联系方式</button>
         </nav>
-        <span class="availability"><i></i> OPEN TO WORK · 2026</span>
+        <div class="topbar-end">
+          <span class="availability"><i></i> OPEN TO WORK · 2026</span>
+          <div class="lang-switch" role="group" aria-label="切换语言" data-i18n-attr="aria-label:lang.label">
+            <button type="button" data-lang-option="zh" aria-pressed="true" lang="zh-CN">中</button>
+            <button type="button" data-lang-option="en" aria-pressed="false" lang="en">EN</button>
+          </div>
+        </div>
       </header>
 
       <div class="detail-view" id="detailView" hidden></div>
@@ -29,17 +35,17 @@
           <div class="scanlines" aria-hidden="true"></div>
           <div class="hero-status"><p>PORTFOLIO / 2026</p><p>45.4642° N · 9.1900° E</p></div>
 
-          <h1 class="galaxy-title" id="heroTitle">
+          <h1 class="galaxy-title" id="heroTitle" data-i18n-html="hero.title">
             <span>在体验的星河里</span>
             <em>寻找真实的人<i>。</i></em>
           </h1>
 
           <div class="hero-intro">
             <p class="eyebrow">INTERACTION DESIGNER · MILAN</p>
-            <p>把情感洞察，变成真实发生的体验。<br />点亮一颗星，认识一个项目。</p>
+            <p data-i18n-html="hero.intro">把情感洞察，变成真实发生的体验。<br />点亮一颗星，认识一个项目。</p>
           </div>
 
-          <div class="galaxy-system" id="galaxySystem" aria-label="精选作品星座">
+          <div class="galaxy-system" id="galaxySystem" aria-label="精选作品星座" data-i18n-attr="aria-label:galaxy.label">
             <svg class="galaxy-vortex" viewBox="0 0 1000 680" aria-hidden="true">
               <g class="vortex-blue" fill="none">
                 <ellipse cx="500" cy="340" rx="455" ry="285" pathLength="100" />
@@ -70,24 +76,24 @@
             <span class="dust-star dust-one" aria-hidden="true"></span>
             <span class="dust-star dust-two" aria-hidden="true"></span>
             <span class="dust-star dust-three" aria-hidden="true"></span>
-            <div id="workStars" aria-label="四个精选作品星座"></div>
+            <div id="workStars" aria-label="精选作品星星" data-i18n-attr="aria-label:galaxy.stars"></div>
           </div>
 
           <aside class="project-dossier" id="projectDossier" aria-live="polite">
             <div class="dossier-index">SELECT A STAR</div>
-            <h2>点亮一个作品</h2>
-            <p>选择星河中的任意一颗星，查看项目介绍。</p>
+            <h2 data-i18n="dossier.title">点亮一个作品</h2>
+            <p data-i18n="dossier.body">选择星河中的任意一颗星，查看项目介绍。</p>
             <div class="dossier-meta"><span id="dossierProjectCount">4 PROJECTS</span><span id="dossierBoardCount">56 BOARDS</span></div>
           </aside>
 
-          <button class="scroll-cue" data-scroll="works" aria-label="向下查看全部作品"><span>SCROLL TO EXPLORE</span><i>↓</i></button>
+          <button class="scroll-cue" data-scroll="works" aria-label="向下查看全部作品" data-i18n-attr="aria-label:scroll.label"><span>SCROLL TO EXPLORE</span><i>↓</i></button>
         </section>
 
         <section class="section works" id="works">
           <div class="section-kicker"><span>01</span><p>SELECTED ORBITS</p><p id="projectStats">4 PROJECTS · 56 BOARDS</p></div>
           <div class="section-heading">
-            <h2>每个项目，<br /><em>都是一颗有引力的星体。</em></h2>
-            <p>从研究洞察到交互落地，沿着四条轨道查看我的完整设计过程。</p>
+            <h2 data-i18n-html="works.heading">每个项目，<br /><em>都是一颗有引力的星体。</em></h2>
+            <p data-i18n="works.lede">从研究洞察到交互落地，沿着每一条轨道查看我的完整设计过程。</p>
           </div>
           <div class="project-index" id="projectGrid"></div>
         </section>
@@ -98,17 +104,17 @@
             <figure class="about-portrait">
               <span class="portrait-word" aria-hidden="true">ABOUT</span>
               <span class="portrait-name" aria-hidden="true">XIAOLI</span>
-              <img src="src/assets/jiang-xiaoli-cutout.png" alt="交互设计师江晓丽" loading="lazy" />
+              <img src="src/assets/jiang-xiaoli-cutout.png" alt="交互设计师江晓丽" loading="lazy" data-i18n-attr="alt:about.portraitAlt" />
               <figcaption><span>JIANG XIAOLI</span><span>UX / INTERACTION DESIGNER</span></figcaption>
             </figure>
             <div class="about-intro">
               <p class="eyebrow">HELLO, I'M XIAOLI</p>
-              <h2>在情感洞察与<br /><em>商业价值之间设计。</em></h2>
-              <p class="about-role">江晓丽 · UX / 交互设计师 · 米兰理工大学数字交互设计硕士在读 · 2027 届</p>
-              <p>我从研究中找到真实需求，再把洞察转化为清晰、可落地的产品体验；尤其关注 AI 产品、软硬件协同与情感化设计。</p>
-              <div class="focus-strip" aria-label="核心能力"><span>情感洞察</span><span>商业思维</span><span>AI 全链路</span></div>
+              <h2 data-i18n-html="about.heading">在情感洞察与<br /><em>商业价值之间设计。</em></h2>
+              <p class="about-role" data-i18n="about.role">江晓丽 · UX / 交互设计师 · 米兰理工大学数字交互设计硕士在读 · 2027 届</p>
+              <p data-i18n="about.bio">我从研究中找到真实需求，再把洞察转化为清晰、可落地的产品体验；尤其关注 AI 产品、软硬件协同与情感化设计。</p>
+              <div class="focus-strip" aria-label="核心能力" data-i18n-attr="aria-label:about.focusLabel"><span data-i18n="about.focus1">情感洞察</span><span data-i18n="about.focus2">商业思维</span><span data-i18n="about.focus3">AI 全链路</span></div>
               <div class="about-actions">
-                <a class="resume-link" href="src/assets/jiang-xiaoli-cv.pdf" target="_blank" rel="noreferrer">查看完整简历 <span>↗</span></a>
+                <a class="resume-link" href="src/assets/jiang-xiaoli-cv.pdf" target="_blank" rel="noreferrer" data-i18n-html="about.cv">查看完整简历 <span>↗</span></a>
                 <span>BASED IN MILAN · AVAILABLE FOR INTERVIEWS</span>
               </div>
             </div>
@@ -119,35 +125,35 @@
               <h3 id="experienceTitle"><span>01</span> EXPERIENCE</h3>
               <article class="experience-item">
                 <div class="resume-heading">
-                  <div><strong>深圳市心感智影科技有限公司</strong><p>UX/UI 设计实习生 · AI 软硬件初创</p></div>
+                  <div><strong data-i18n="exp.company">深圳市心感智影科技有限公司</strong><p data-i18n="exp.role">UX/UI 设计实习生 · AI 软硬件初创</p></div>
                   <time>2026.05 — 2026.09</time>
                 </div>
                 <ul class="experience-points">
-                  <li>负责 <strong>Odyss App 产品体验设计</strong>，参与 <strong>AI 产品软硬件交互</strong>、UI 设计等核心工作；完成 <strong>Pizza 营销页面</strong>与 <strong>IFA 深体验区</strong>的体验流程设计和上线走查。</li>
-                  <li>深入开展<strong>用户研究与竞品分析</strong>，主动识别体验问题，并推动优化方案落地。</li>
-                  <li>协助完成<strong>界面视觉设计</strong>，参与制定设计规范与<strong>设计组件库搭建</strong>，确保产品视觉风格统一、一致。</li>
-                  <li>熟练运用 <strong>AIGC 设计工具</strong>，结合 <strong>Figma 与编程工具</strong>，高效推动设计方案从概念走向产品化落地。</li>
+                  <li data-i18n-html="exp.p1">负责 <strong>Odyss App 产品体验设计</strong>，参与 <strong>AI 产品软硬件交互</strong>、UI 设计等核心工作；完成 <strong>Pizza 营销页面</strong>与 <strong>IFA 深体验区</strong>的体验流程设计和上线走查。</li>
+                  <li data-i18n-html="exp.p2">深入开展<strong>用户研究与竞品分析</strong>，主动识别体验问题，并推动优化方案落地。</li>
+                  <li data-i18n-html="exp.p3">协助完成<strong>界面视觉设计</strong>，参与制定设计规范与<strong>设计组件库搭建</strong>，确保产品视觉风格统一、一致。</li>
+                  <li data-i18n-html="exp.p4">熟练运用 <strong>AIGC 设计工具</strong>，结合 <strong>Figma 与编程工具</strong>，高效推动设计方案从概念走向产品化落地。</li>
                 </ul>
               </article>
             </section>
 
             <section class="resume-column" aria-labelledby="educationTitle">
               <h3 id="educationTitle"><span>02</span> EDUCATION & AWARDS</h3>
-              <div class="education-item"><time>2025.09 — 2027.07</time><strong>米兰理工大学</strong><p>数字交互设计硕士（在读）<br />QS 艺术与设计排名世界第 7</p></div>
-              <div class="education-item"><time>2018.09 — 2022.06</time><strong>北京印刷学院</strong><p>视觉传达设计本科<br />国家奖学金 · 专业第一</p></div>
+              <div class="education-item"><time>2025.09 — 2027.07</time><strong data-i18n="edu.polimi">米兰理工大学</strong><p data-i18n-html="edu.polimiBody">数字交互设计硕士（在读）<br />QS 艺术与设计排名世界第 7</p></div>
+              <div class="education-item"><time>2018.09 — 2022.06</time><strong data-i18n="edu.bigc">北京印刷学院</strong><p data-i18n-html="edu.bigcBody">视觉传达设计本科<br />国家奖学金 · 专业第一</p></div>
               <div class="award-list">
-                <p><b>2026</b><a href="https://www.jamesdysonaward.org/it-IT/2026/project/orpheus" target="_blank" rel="noreferrer">詹姆斯·戴森奖 意大利全国冠军<span aria-hidden="true">↗</span><span class="award-project">James Dyson Award 2026 · 项目 ORPHEUS</span></a></p>
-                <p><b>2025</b><a href="https://ux-design-awards.com/winners/2025-1-last-day" target="_blank" rel="noreferrer">UX Design Award 国际提名奖<span aria-hidden="true">↗</span><span class="award-project">UX Design Awards 2025 · 项目 LAST DAY</span></a></p>
-                <p><b>2021</b><span>欧莱雅 Brandstorm 中国赛区 TOP 8</span></p>
-                <p><b>2021</b><span>国家奖学金<span class="award-project">连续三年专业第一 · 排名 1/260</span></span></p>
+                <p><b>2026</b><a href="https://www.jamesdysonaward.org/it-IT/2026/project/orpheus" target="_blank" rel="noreferrer"><span data-i18n="award.dyson">詹姆斯·戴森奖 意大利全国冠军</span><span aria-hidden="true">↗</span><span class="award-project" data-i18n="award.dysonSub">James Dyson Award 2026 · 项目 ORPHEUS</span></a></p>
+                <p><b>2025</b><a href="https://ux-design-awards.com/winners/2025-1-last-day" target="_blank" rel="noreferrer"><span data-i18n="award.uxda">UX Design Award 国际提名奖</span><span aria-hidden="true">↗</span><span class="award-project" data-i18n="award.uxdaSub">UX Design Awards 2025 · 项目 LAST DAY</span></a></p>
+                <p><b>2021</b><span data-i18n="award.loreal">欧莱雅 Brandstorm 中国赛区 TOP 8</span></p>
+                <p><b>2021</b><span><span data-i18n="award.scholarship">国家奖学金</span><span class="award-project" data-i18n="award.scholarshipSub">连续三年专业第一 · 排名 1/260</span></span></p>
               </div>
             </section>
 
             <section class="resume-column" aria-labelledby="capabilitiesTitle">
               <h3 id="capabilitiesTitle"><span>03</span> CAPABILITIES</h3>
-              <div class="capability-group"><h4>设计能力</h4><p>交互设计 · 信息架构<br />用户研究 · 情感化设计</p></div>
-              <div class="capability-group"><h4>工具与工作流</h4><div class="skill-cloud"><span>Figma</span><span>Codex</span><span>Claude Code</span><span>Google Stitch</span><span>Figma Make</span><span>GPT Image 2.0</span><span>RodinAI</span><span>Adobe CC</span></div></div>
-              <div class="capability-group"><h4>语言</h4><p>普通话 / 粤语 · 母语<br />英语 · B2，可流利口语</p></div>
+              <div class="capability-group"><h4 data-i18n="cap.design">设计能力</h4><p data-i18n-html="cap.designBody">交互设计 · 信息架构<br />用户研究 · 情感化设计</p></div>
+              <div class="capability-group"><h4 data-i18n-html="cap.tools">工具与工作流</h4><div class="skill-cloud"><span>Figma</span><span>Codex</span><span>Claude Code</span><span>Google Stitch</span><span>Figma Make</span><span>GPT Image 2.0</span><span>RodinAI</span><span>Adobe CC</span></div></div>
+              <div class="capability-group"><h4 data-i18n="cap.lang">语言</h4><p data-i18n-html="cap.langBody">普通话 / 粤语 · 母语<br />英语 · B2，可流利口语</p></div>
             </section>
           </div>
           <p class="about-footnote">RESEARCH WITH EMPATHY · DESIGN WITH RIGOR · BUILD WITH CURIOSITY</p>
@@ -157,16 +163,16 @@
           <div class="contact-copy">
             <div class="section-kicker"><span>03</span><p>ESTABLISH CONTACT</p><p>AVAILABLE NOW</p></div>
             <p class="eyebrow">LET'S CONNECT</p>
-            <h2>下一段轨道，<br /><em>也许从这里开始。</em></h2>
-            <p>目前坐标米兰，可远程面试。欢迎找我聊聊，期待一起共事。</p>
+            <h2 data-i18n-html="contact.heading">下一段轨道，<br /><em>也许从这里开始。</em></h2>
+            <p data-i18n="contact.body">目前坐标米兰，可远程面试。欢迎找我聊聊，期待一起共事。</p>
             <div class="contact-channel-grid">
               <div class="contact-links">
-                <button class="contact-copy-button" data-copy="13311579771" data-copy-label="手机号">手机 133 1157 9771 <span>复制</span></button>
-                <button class="contact-copy-button" data-copy="jiangxiaoli721@gmail.com" data-copy-label="邮箱">jiangxiaoli721@gmail.com <span>复制</span></button>
-                <button class="contact-copy-button" data-copy="jiangxiaoli721" data-copy-label="微信号">微信号 jiangxiaoli721 <span>复制</span></button>
+                <button class="contact-copy-button" data-copy="13311579771" data-copy-label="contact.phoneLabel"><b data-i18n="contact.phone">手机 133 1157 9771</b> <span data-i18n="copy.action">复制</span></button>
+                <button class="contact-copy-button" data-copy="jiangxiaoli721@gmail.com" data-copy-label="contact.emailLabel"><b>jiangxiaoli721@gmail.com</b> <span data-i18n="copy.action">复制</span></button>
+                <button class="contact-copy-button" data-copy="jiangxiaoli721" data-copy-label="contact.wechatLabel"><b data-i18n="contact.wechat">微信号 jiangxiaoli721</b> <span data-i18n="copy.action">复制</span></button>
               </div>
               <figure class="wechat-card">
-                <img src="src/assets/wechat-qr.png" alt="江晓丽的微信二维码" loading="lazy" />
+                <img src="src/assets/wechat-qr.png" alt="江晓丽的微信二维码" loading="lazy" data-i18n-attr="alt:contact.qrAlt" />
               </figure>
               <small id="copyFeedback" role="status"></small>
             </div>
@@ -174,26 +180,26 @@
           <form class="contact-form" id="contactForm" novalidate>
             <div class="contact-rating">
               <p class="contact-rating-kicker">A STAR FROM YOU</p>
-              <h3>看完之后，<br />为这片星河留一颗星。</h3>
-              <div class="rating-stars" role="radiogroup" aria-label="为作品集评分，满分五星">
-                <button type="button" role="radio" aria-checked="false" data-rating="1" aria-label="1 星">☆</button>
-                <button type="button" role="radio" aria-checked="false" data-rating="2" aria-label="2 星">☆</button>
-                <button type="button" role="radio" aria-checked="false" data-rating="3" aria-label="3 星">☆</button>
-                <button type="button" role="radio" aria-checked="false" data-rating="4" aria-label="4 星">☆</button>
-                <button type="button" role="radio" aria-checked="false" data-rating="5" aria-label="5 星">☆</button>
+              <h3 data-i18n-html="rating.heading">看完之后，<br />为这片星河留一颗星。</h3>
+              <div class="rating-stars" role="radiogroup" aria-label="为作品集评分，满分五星" data-i18n-attr="aria-label:rating.groupLabel">
+                <button type="button" role="radio" aria-checked="false" data-rating="1" aria-label="1 星" data-i18n-attr="aria-label:rating.star" data-i18n-n="1">☆</button>
+                <button type="button" role="radio" aria-checked="false" data-rating="2" aria-label="2 星" data-i18n-attr="aria-label:rating.stars" data-i18n-n="2">☆</button>
+                <button type="button" role="radio" aria-checked="false" data-rating="3" aria-label="3 星" data-i18n-attr="aria-label:rating.stars" data-i18n-n="3">☆</button>
+                <button type="button" role="radio" aria-checked="false" data-rating="4" aria-label="4 星" data-i18n-attr="aria-label:rating.stars" data-i18n-n="4">☆</button>
+                <button type="button" role="radio" aria-checked="false" data-rating="5" aria-label="5 星" data-i18n-attr="aria-label:rating.stars" data-i18n-n="5">☆</button>
               </div>
               <p class="rating-feedback" id="ratingFeedback" role="status">选择一颗星完成评分</p>
               <div class="rating-actions">
-                <button type="button" id="removeRating" hidden>撤回评分</button>
-                <button type="button" id="undoRating" hidden>撤销</button>
+                <button type="button" id="removeRating" hidden data-i18n="rating.remove">撤回评分</button>
+                <button type="button" id="undoRating" hidden data-i18n="rating.undo">撤销</button>
               </div>
             </div>
-            <label>评价或提升建议（选填）<textarea name="message" placeholder="哪一部分打动了你？还有什么可以做得更好？" rows="3"></textarea></label>
+            <label><span data-i18n="form.label">评价或提升建议（选填）</span><textarea name="message" placeholder="哪一部分打动了你？还有什么可以做得更好？" rows="3" data-i18n-attr="placeholder:form.placeholder"></textarea></label>
             <p class="form-feedback error" id="formError" role="alert"></p>
             <p class="form-feedback success" id="formSuccess" role="status"></p>
             <button class="space-button submit-button" id="submitButton">提交反馈 <span>↗</span></button>
           </form>
-          <div class="feedback-galaxy" id="feedbackGalaxy" aria-label="观众留下的星光">
+          <div class="feedback-galaxy" id="feedbackGalaxy" aria-label="观众留下的星光" data-i18n-attr="aria-label:galaxy.feedbackLabel">
             <div class="feedback-galaxy-copy">
               <span>LIGHTS LEFT BY VIEWERS</span>
               <p id="feedbackGalaxyStatus" role="status">等待第一颗星落入这里</p>
@@ -208,9 +214,9 @@
             </div>
           </div>
           <aside class="rating-data" id="ratingData" hidden aria-labelledby="ratingDataTitle">
-            <div><p>LOCAL FEEDBACK DATA</p><h3 id="ratingDataTitle">当前浏览器评分与建议</h3></div>
-            <dl><div><dt>平均分</dt><dd id="ratingAverage">—</dd></div><div><dt>评分数</dt><dd id="ratingCount">0</dd></div><div><dt>最近更新</dt><dd id="ratingUpdated">—</dd></div></dl>
-            <p><strong>最近评价：</strong><span id="feedbackLatest">尚未提交评价或建议。</span><br />当前为本地预览版，只记录这个浏览器的数据。接入数据库后可汇总所有访客反馈。</p>
+            <div><p>LOCAL FEEDBACK DATA</p><h3 id="ratingDataTitle" data-i18n="data.title">当前浏览器评分与建议</h3></div>
+            <dl><div><dt data-i18n="data.average">平均分</dt><dd id="ratingAverage">—</dd></div><div><dt data-i18n="data.count">评分数</dt><dd id="ratingCount">0</dd></div><div><dt data-i18n="data.updated">最近更新</dt><dd id="ratingUpdated">—</dd></div></dl>
+            <p><strong data-i18n="data.latest">最近评价：</strong><span id="feedbackLatest">尚未提交评价或建议。</span><br /><span data-i18n="data.note">当前为本地预览版，只记录这个浏览器的数据。接入数据库后可汇总所有访客反馈。</span></p>
           </aside>
         </section>
       </main>

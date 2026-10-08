@@ -1,4 +1,10 @@
 import { defaultStarAngles, projectSlides, projects } from './data/projects.js'
+import { applyStaticCopy, getLang, localize, onLangChange, setLang, t } from './i18n.js'
+
+applyStaticCopy()
+document.querySelectorAll('[data-lang-option]').forEach((button) => {
+  button.addEventListener('click', () => setLang(button.dataset.langOption))
+})
 
 const slideImageUrls = import.meta.glob('./assets/slides/**/*.png', {
   eager: true,
@@ -30,7 +36,7 @@ document.getElementById('dossierProjectCount').textContent = `${projects.length}
 document.getElementById('dossierBoardCount').textContent = `${totalBoards} BOARDS`
 
 workStars.innerHTML = projects.map((project) => `
-  <button class="work-star star-${project.id}" data-star="${project.id}" aria-pressed="false" aria-label="点亮 ${project.title}">
+  <button class="work-star star-${project.id}" data-star="${project.id}" aria-pressed="false" aria-label="${t('works.starLabel', { title: project.title })}">
     <span class="star-shape" aria-hidden="true"></span>
     <span class="star-label"><b>${project.index}</b><span>${project.title.toUpperCase()}</span></span>
   </button>
@@ -48,27 +54,30 @@ function projectMediaMarkup(project) {
   if (media.type === 'stack') {
     return `<div class="project-media-stack">${media.images.map((src, index) => `<img src="${mediaUrls[src] || src}" alt="${project.title}：${media.label} ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">`).join('')}</div>`
   }
-  return `<img class="project-media-image" src="${mediaUrls[media.src] || media.src}" alt="${project.title}：${media.label}" loading="lazy">`
+  return `<img class="project-media-image" src="${mediaUrls[media.src] || media.src}" alt="${getLang() === 'en' ? `${project.title} cover` : `${project.title}：${media.label}`}" loading="lazy">`
 }
 
+function renderGrid() {
 grid.innerHTML = projects.map((project) => `
   <article class="project-row project-${project.id}">
     <div class="project-row-copy">
       <p class="project-meta">${project.meta} · ${project.pages} PAGES</p>
       <h3>${project.title}</h3>
-      <p class="project-subtitle">${project.subtitle}</p>
-      <p class="project-summary">${project.summary}</p>
-      <div class="tag-list">${project.tags.map((tag) => `<span>${tag}</span>`).join('')}</div>
-      <button class="project-link" data-project="${project.id}" data-project-launch="${project.id}" aria-label="点亮星星并进入 ${project.title}">进入项目 <span class="entry-star" aria-hidden="true"><span class="entry-star-core"></span></span></button>
-      ${project.liveUrl ? `<div class="project-live-entry"><p>如果你也对这个项目感兴趣，欢迎点进来玩玩，上传一个属于你的披萨。</p><a href="${project.liveUrl}" target="_blank" rel="noreferrer">探索披萨世界 <span class="entry-star" aria-hidden="true"><span class="entry-star-core"></span></span></a></div>` : ''}
+      <p class="project-subtitle">${localize(project, 'subtitle')}</p>
+      <p class="project-summary">${localize(project, 'summary')}</p>
+      <div class="tag-list">${localize(project, 'tags').map((tag) => `<span>${tag}</span>`).join('')}</div>
+      <button class="project-link" data-project="${project.id}" data-project-launch="${project.id}" aria-label="${t('works.enterLabel', { title: project.title })}">${t('works.enter')} <span class="entry-star" aria-hidden="true"><span class="entry-star-core"></span></span></button>
+      ${project.liveUrl ? `<div class="project-live-entry"><p>${t('works.liveInvite')}</p><a href="${project.liveUrl}" target="_blank" rel="noreferrer">${t('works.liveCta')} <span class="entry-star" aria-hidden="true"><span class="entry-star-core"></span></span></a></div>` : ''}
     </div>
-    <button class="project-media${project.media?.ratio ? ' project-media--fitted' : ''}" data-project="${project.id}" aria-label="查看 ${project.title} 完整项目"${project.media?.ratio ? ` style="aspect-ratio: ${project.media.ratio}"` : ''}>
+    <button class="project-media${project.media?.ratio ? ' project-media--fitted' : ''}" data-project="${project.id}" aria-label="${t('works.mediaLabel', { title: project.title })}"${project.media?.ratio ? ` style="aspect-ratio: ${project.media.ratio}"` : ''}>
       <span class="project-media-index">${project.index}</span>
       ${projectMediaMarkup(project)}
       <span class="project-media-overlay">EXPLORE CASE STUDY <b>↗</b></span>
     </button>
   </article>
 `).join('')
+}
+renderGrid()
 
 function orbitPoint(angle, id) {
   const radians = angle * Math.PI / 180
@@ -121,6 +130,8 @@ function animateGalaxyTo(id) {
   }).catch(() => {})
 }
 
+let selectedProjectId = null
+
 async function updateDossier(id) {
   const project = projects.find((item) => item.id === id)
   if (!project) return
@@ -139,8 +150,15 @@ async function updateDossier(id) {
   const selectedStar = document.querySelector(`[data-star="${id}"]`)
   selectedStar.classList.remove('is-traveling')
   selectedStar.classList.add('is-active')
-  dossier.innerHTML = `<div class="dossier-index">STAR ${project.index} / ${String(projects.length).padStart(2, '0')} · SELECTED</div><h2>${project.title}</h2><p>${project.subtitle}</p><p class="dossier-summary">${project.summary}</p><div class="dossier-meta"><span>${project.meta.split(' · ')[0]}</span><span>${project.pages} BOARDS</span></div><button class="dossier-link" data-project="${project.id}">查看完整作品 <span>↗</span></button>`
+  selectedProjectId = id
+  renderDossier()
   dossier.classList.remove('is-changing')
+}
+
+function renderDossier() {
+  const project = projects.find((item) => item.id === selectedProjectId)
+  if (!project) return
+  dossier.innerHTML = `<div class="dossier-index">STAR ${project.index} / ${String(projects.length).padStart(2, '0')} · SELECTED</div><h2>${project.title}</h2><p>${localize(project, 'subtitle')}</p><p class="dossier-summary">${localize(project, 'summary')}</p><div class="dossier-meta"><span>${project.meta.split(' · ')[0]}</span><span>${project.pages} BOARDS</span></div><button class="dossier-link" data-project="${project.id}">${t('dossier.cta')} <span>↗</span></button>`
 }
 
 document.querySelectorAll('[data-star]').forEach((star) => {
@@ -154,21 +172,24 @@ window.addEventListener('resize', placeStars)
 function renderVideoSlide(project, slide, index, total) {
   const videoUrl = mediaUrls[slide.src]
   const posterUrl = slide.poster ? mediaUrls[slide.poster] : ''
+  const pageTitle = getLang() === 'en' && slide.titleEn ? slide.titleEn : slide.title
   if (!videoUrl) {
-    return `<div class="detail-empty"><strong>第 ${index + 1} 页暂时无法显示</strong><span>${slide.title}</span></div>`
+    return `<div class="detail-empty"><strong>${t('detail.missing', { n: index + 1 })}</strong><span>${pageTitle}</span></div>`
   }
-  return `<figure class="portfolio-slide video-slide" aria-label="${project.title}：${slide.title}（第 ${index + 1} 页，共 ${total} 页）">
+  return `<figure class="portfolio-slide video-slide" aria-label="${t('detail.slideAlt', { title: project.title, page: pageTitle, n: index + 1, total })}">
       <figcaption class="video-slide__header">
         <span class="video-slide__label">${slide.label}</span>
-        <strong class="video-slide__title">${slide.title}</strong>
+        <strong class="video-slide__title">${pageTitle}</strong>
       </figcaption>
       <div class="video-slide__frame">
-        <video src="${videoUrl}"${posterUrl ? ` poster="${posterUrl}"` : ''} autoplay muted loop playsinline preload="auto" aria-label="${slide.title} 交互录屏"></video>
+        <video src="${videoUrl}"${posterUrl ? ` poster="${posterUrl}"` : ''} autoplay muted loop playsinline preload="auto" aria-label="${t('detail.videoLabel', { page: pageTitle })}"></video>
       </div>
     </figure>`
 }
 
-function renderDetail(id) {
+let renderedDetailId = null
+
+function renderDetail(id, { keepScroll = false } = {}) {
   const project = projects.find((item) => item.id === id)
   if (!project) return
   detailView.classList.toggle('is-component-detail', id === 'components')
@@ -181,26 +202,27 @@ function renderDetail(id) {
       : `./assets/slides/${id}/${file}.png`
     const imageUrl = slideImageUrls[imagePath] || mediaUrls[imagePath]
     if (!imageUrl) {
-      return `<div class="detail-empty"><strong>第 ${index + 1} 页暂时无法显示</strong><span>${title}</span></div>`
+      return `<div class="detail-empty"><strong>${t('detail.missing', { n: index + 1 })}</strong><span>${title}</span></div>`
     }
     const isComponentSlide = file.startsWith('component-library/')
     const naturalRatioClass = file.includes('/') ? ' portfolio-slide--natural' : ''
     const nativeWidthClass = isComponentSlide ? ' portfolio-slide--component' : ''
     const loading = file.includes('/') || index < 2 ? 'eager' : 'lazy'
-    return `<figure class="portfolio-slide${naturalRatioClass}${nativeWidthClass}"><img src="${imageUrl}" alt="${project.title}：${title}（第 ${index + 1} 页，共 ${slides.length} 页）" loading="${loading}" fetchpriority="${file.includes('/') ? 'high' : 'auto'}" decoding="async"></figure>`
+    return `<figure class="portfolio-slide${naturalRatioClass}${nativeWidthClass}"><img src="${imageUrl}" alt="${t('detail.slideAlt', { title: project.title, page: title, n: index + 1, total: slides.length })}" loading="${loading}" fetchpriority="${file.includes('/') ? 'high' : 'auto'}" decoding="async"></figure>`
   }).join('')
   main.hidden = true
   footer.hidden = true
   detailView.hidden = false
   detailView.innerHTML = `
-    <div class="detail-top"><button class="detail-nav-button" data-back>← 返回宇宙</button><span>PROJECT ${project.index} / ${slides.length} BOARDS</span></div>
-    <section class="slide-deck" aria-label="${project.title} 完整作品内容">
-      ${slides.length ? slideMarkup : '<div class="detail-empty"><strong>作品内容正在整理中</strong><span>项目介绍已上线，完整展示页即将补充。</span></div>'}
+    <div class="detail-top"><button class="detail-nav-button" data-back>${t('detail.back')}</button><span>PROJECT ${project.index} / ${slides.length} BOARDS</span></div>
+    <section class="slide-deck" aria-label="${t('detail.deckLabel', { title: project.title })}">
+      ${slides.length ? slideMarkup : `<div class="detail-empty"><strong>${t('detail.emptyTitle')}</strong><span>${t('detail.emptyBody')}</span></div>`}
     </section>
-    <div class="detail-bottom"><button class="detail-nav-button" data-back>← 返回宇宙</button><div><strong>${project.title}</strong><span>${project.subtitle}</span></div><button class="space-button" data-next="${projects[(projects.findIndex((item) => item.id === id) + 1) % projects.length].id}">下一个项目 →</button></div>`
+    <div class="detail-bottom"><button class="detail-nav-button" data-back>${t('detail.back')}</button><div><strong>${project.title}</strong><span>${localize(project, 'subtitle')}</span></div><button class="space-button" data-next="${projects[(projects.findIndex((item) => item.id === id) + 1) % projects.length].id}">${t('detail.next')}</button></div>`
   detailView.querySelectorAll('[data-back]').forEach((button) => button.addEventListener('click', () => { location.hash = 'works' }))
   detailView.querySelector('[data-next]').addEventListener('click', (event) => { location.hash = `project/${event.currentTarget.dataset.next}` })
-  window.scrollTo({ top: 0, behavior: 'instant' })
+  renderedDetailId = id
+  if (!keepScroll) window.scrollTo({ top: 0, behavior: 'instant' })
 }
 
 const ratingButtons = [...document.querySelectorAll('[data-rating]')]
@@ -238,7 +260,7 @@ function readFeedback() {
 
 function renderFeedbackGalaxy(value = 0) {
   feedbackStars.forEach((star) => star.classList.toggle('is-lit', Number(star.dataset.feedbackStar) <= value))
-  feedbackGalaxyStatus.textContent = value ? `这片星河已收到 ${value} 颗星光` : '等待第一颗星落入这里'
+  feedbackGalaxyStatus.textContent = value ? t('galaxy.received', { n: value }) : t('galaxy.waiting')
 }
 
 function clearMeteors() {
@@ -290,7 +312,7 @@ function renderRatingState(rating = readRating(), syncGalaxy = true) {
     ? new Intl.DateTimeFormat('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(rating.updatedAt))
     : '—'
   const feedback = readFeedback()
-  document.getElementById('feedbackLatest').textContent = feedback?.message || '尚未提交评价或建议。'
+  document.getElementById('feedbackLatest').textContent = feedback?.message || t('data.none')
   if (syncGalaxy) renderFeedbackGalaxy(value)
 }
 
@@ -314,10 +336,10 @@ ratingButtons.forEach((button, index) => {
       removedRating = null
       undoRatingButton.hidden = true
       renderRatingState(rating, false)
-      ratingFeedback.textContent = `谢谢你的 ${value} 星评分！你可以随时修改。`
+      ratingFeedback.textContent = t('rating.thanks', { n: value })
       await sendStarsToGalaxy(value)
     } catch {
-      ratingFeedback.textContent = '暂时无法保存评分，请检查浏览器是否允许本地存储。'
+      ratingFeedback.textContent = t('rating.saveFail')
     }
   })
   button.addEventListener('keydown', (event) => {
@@ -337,7 +359,7 @@ removeRatingButton.addEventListener('click', () => {
     meteorSequence += 1
     clearMeteors()
     renderRatingState(null)
-    ratingFeedback.textContent = '评分已撤回。'
+    ratingFeedback.textContent = t('rating.removed')
     undoRatingButton.hidden = !removedRating
     clearTimeout(undoRatingTimer)
     undoRatingTimer = window.setTimeout(() => {
@@ -345,7 +367,7 @@ removeRatingButton.addEventListener('click', () => {
       undoRatingButton.hidden = true
     }, 5000)
   } catch {
-    ratingFeedback.textContent = '暂时无法撤回评分，请稍后再试。'
+    ratingFeedback.textContent = t('rating.removeFail')
   }
 })
 
@@ -354,13 +376,13 @@ undoRatingButton.addEventListener('click', () => {
   try {
     writeRating(removedRating)
     renderRatingState(removedRating, false)
-    ratingFeedback.textContent = '已恢复刚才的评分。'
+    ratingFeedback.textContent = t('rating.restored')
     sendStarsToGalaxy(removedRating.value)
     removedRating = null
     undoRatingButton.hidden = true
     clearTimeout(undoRatingTimer)
   } catch {
-    ratingFeedback.textContent = '暂时无法恢复评分，请重新选择星星。'
+    ratingFeedback.textContent = t('rating.restoreFail')
   }
 })
 
@@ -450,22 +472,23 @@ document.querySelectorAll('[data-copy]').forEach((button) => button.addEventList
     await copyText(currentButton.dataset.copy)
     document.querySelectorAll('[data-copy]').forEach((button) => {
       button.classList.remove('is-copied')
-      button.querySelector('span').textContent = '复制'
+      button.querySelector('span').textContent = t('copy.action')
     })
     currentButton.classList.add('is-copied')
-    action.textContent = '已复制'
-    feedback.textContent = `${currentButton.dataset.copyLabel}已复制到剪贴板`
+    action.textContent = t('copy.done')
+    feedback.textContent = t('copy.success', { label: t(currentButton.dataset.copyLabel) })
   } catch {
-    feedback.textContent = `复制失败，请手动复制：${currentButton.dataset.copy}`
+    feedback.textContent = t('copy.fail', { value: currentButton.dataset.copy })
   }
   window.setTimeout(() => {
     currentButton.classList.remove('is-copied')
-    action.textContent = '复制'
+    action.textContent = t('copy.action')
     feedback.textContent = ''
   }, 2400)
 }))
 
 const form = document.getElementById('contactForm')
+let formSubmitted = false
 const formError = document.getElementById('formError')
 const formSuccess = document.getElementById('formSuccess')
 const submitButton = document.getElementById('submitButton')
@@ -477,24 +500,26 @@ form.addEventListener('submit', (event) => {
   const message = String(data.get('message')).trim()
   const rating = readRating()
   if (!rating) {
-    formError.textContent = '请先为作品集选择 1—5 星评分。'
+    formError.textContent = t('form.needRating')
     ratingButtons[0].focus()
     return
   }
   submitButton.disabled = true
-  submitButton.innerHTML = '提交中 <span>···</span>'
+  submitButton.innerHTML = t('form.sending')
   window.setTimeout(() => {
     const feedbackRecord = { ...rating, message, submittedAt: new Date().toISOString() }
     try { localStorage.setItem(feedbackStorageKey, JSON.stringify(feedbackRecord)) } catch {}
     renderRatingState(rating)
-    formSuccess.textContent = '谢谢你的评分与建议，这会帮助我继续改进作品集。'
+    formSuccess.textContent = t('form.success')
     submitButton.disabled = false
-    submitButton.innerHTML = '重新填写 <span>↻</span>'
+    submitButton.innerHTML = t('form.again')
+    formSubmitted = true
     submitButton.type = 'button'
     submitButton.onclick = () => {
       form.reset()
       formSuccess.textContent = ''
-      submitButton.innerHTML = '提交反馈 <span>↗</span>'
+      submitButton.innerHTML = t('form.submit')
+      formSubmitted = false
       submitButton.type = 'submit'
       submitButton.onclick = null
     }
@@ -552,3 +577,27 @@ function initStarfield() {
 }
 
 initStarfield()
+
+function syncLanguageCopy() {
+  const rating = readRating()
+  ratingFeedback.textContent = rating ? t('rating.thanks', { n: rating.value }) : t('rating.prompt')
+  if (submitButton.disabled) submitButton.innerHTML = t('form.sending')
+  else submitButton.innerHTML = formSubmitted ? t('form.again') : t('form.submit')
+  if (formSuccess.textContent) formSuccess.textContent = t('form.success')
+  if (formError.textContent) formError.textContent = t('form.needRating')
+  document.getElementById('copyFeedback').textContent = ''
+  renderRatingState(rating)
+}
+
+syncLanguageCopy()
+
+onLangChange(() => {
+  workStars.querySelectorAll('[data-star]').forEach((star) => {
+    const project = projects.find((item) => item.id === star.dataset.star)
+    star.setAttribute('aria-label', t('works.starLabel', { title: project.title }))
+  })
+  renderGrid()
+  renderDossier()
+  if (renderedDetailId && !detailView.hidden) renderDetail(renderedDetailId, { keepScroll: true })
+  syncLanguageCopy()
+})

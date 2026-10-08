@@ -74,6 +74,21 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   transition: color .2s;
 }
 .topbar nav button:hover, footer button:hover { color: #fff; }
+.topbar-end { justify-self: end; display: flex; align-items: center; gap: 22px; }
+.lang-switch { display: inline-flex; padding: 2px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; }
+.lang-switch button {
+  min-width: 38px;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 999px;
+  color: #b7b7c0;
+  background: transparent;
+  font: 500 12px/1 Manrope, 'Noto Sans SC', 'PingFang SC', sans-serif;
+  letter-spacing: .04em;
+  transition: color .2s, background .2s;
+}
+.lang-switch button:hover { color: #fff; }
+.lang-switch button[aria-pressed="true"] { color: #05050a; background: #f4f2ec; }
 .availability {
   justify-self: end;
   color: #b7b7c0;
@@ -223,6 +238,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   text-shadow: 0 0 16px rgba(255, 229, 138, .16);
 }
 .galaxy-title i { color: inherit; font-style: normal; }
+:lang(en) .galaxy-title { font-size: clamp(38px, 4.2vw, 68px); letter-spacing: 0; }
+:lang(en) .galaxy-title em { letter-spacing: .02em; }
 
 .galaxy-system {
   position: absolute;
@@ -594,7 +611,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .award-list p { display: grid; grid-template-columns: 64px 1fr; align-items: baseline; gap: 12px; margin: 0; color: #34343b; font-size: 15px; line-height: 1.55; }
 .award-list b { color: #3048ff; font: 13px DM Mono, monospace; font-variant-numeric: tabular-nums; }
 .award-list a { color: #17171d; font-weight: 600; text-decoration: underline; text-decoration-color: rgba(48,72,255,.45); text-underline-offset: 4px; transition: color .2s, text-decoration-color .2s; }
-.award-list a span { color: #3048ff; margin-left: 4px; }
+.award-list a > span[aria-hidden="true"] { color: #3048ff; margin-left: 4px; }
 .award-list a:hover, .award-list a:focus-visible { color: #3048ff; text-decoration-color: #3048ff; }
 .award-list .award-project { display: inline-block; width: 100%; margin-left: 0; margin-top: 3px; color: #6e6e76; font-size: 13px; font-weight: 400; }
 .award-list small { color: #6e6e76; font-size: 12px; }
@@ -838,8 +855,9 @@ footer a:hover { color: #fff; }
 }
 
 @media (max-width: 760px) {
-  .topbar { height: 62px; padding: 0 5vw; grid-template-columns: 1fr auto; }
+  .topbar { height: 62px; padding: 0 5vw; grid-template-columns: 1fr auto auto; gap: 14px; }
   .availability { display: none; }
+  .lang-switch button { min-width: 34px; padding: 5px 8px; }
   .topbar nav { gap: 15px; }
   .topbar nav button { font-size: 9px; }
   .cosmos { height: auto; min-height: 980px; padding: 0 5vw; }
