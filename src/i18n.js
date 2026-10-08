@@ -54,7 +54,7 @@ const copy = {
   'about.cv': { zh: '查看完整简历 <span>↗</span>', en: 'View full CV <span>↗</span>' },
 
   'exp.company': { zh: '深圳市心感智影科技有限公司', en: 'ODYSS · Shenzhen Xinganzhiying Technology' },
-  'exp.role': { zh: 'UX/UI 设计实习生 · AI 软硬件初创', en: 'UX/UI Design Intern · AI hardware startup' },
+  'exp.role': { zh: 'UX/UI 设计实习生 · AI 软硬件初创', en: 'UX/UI Design Intern · AI wearable startup' },
   'exp.p1': { zh: '负责 <strong>Odyss App 产品体验设计</strong>，参与 <strong>AI 产品软硬件交互</strong>、UI 设计等核心工作；完成 <strong>Pizza 营销页面</strong>与 <strong>IFA 深体验区</strong>的体验流程设计和上线走查。', en: 'Owned <strong>product experience design for the Odyss app</strong> and worked on <strong>AI hardware–software interaction</strong> and UI design; designed and QA’d the experience flows for the <strong>Pizza marketing site</strong> and the <strong>IFA hands-on demo area</strong> through launch.' },
   'exp.p2': { zh: '深入开展<strong>用户研究与竞品分析</strong>，主动识别体验问题，并推动优化方案落地。', en: 'Ran <strong>user research and competitive analysis</strong>, surfaced experience issues on my own initiative and drove the fixes through to release.' },
   'exp.p3': { zh: '协助完成<strong>界面视觉设计</strong>，参与制定设计规范与<strong>设计组件库搭建</strong>，确保产品视觉风格统一、一致。', en: 'Contributed to <strong>visual UI design</strong>, helped define the design guidelines and <strong>build the component library</strong> to keep the product visually consistent.' },
