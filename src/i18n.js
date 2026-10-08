@@ -17,7 +17,7 @@ const copy = {
   'lang.label': { zh: '切换语言', en: 'Switch language' },
 
   'hero.title': { zh: '<span>在体验的星河里</span><em>寻找真实的人<i>。</i></em>', en: '<span>In a galaxy of experiences,</span><em>finding real people<i>.</i></em>' },
-  'hero.intro': { zh: '把情感洞察，变成真实发生的体验。<br />点亮一颗星，认识一个项目。', en: 'Turning emotional insight into experiences that really happen.<br />Light up a star to meet a project.' },
+  'hero.intro': { zh: '把情感洞察，变成真实发生的体验。<br />点亮一颗星，认识一个项目。', en: 'Turning emotional insight into real experiences.<br />Light up a star to meet a project.' },
   'galaxy.label': { zh: '精选作品星座', en: 'Constellation of selected work' },
   'galaxy.stars': { zh: '精选作品星星', en: 'Selected work stars' },
   'dossier.title': { zh: '点亮一个作品', en: 'Light up a project' },
