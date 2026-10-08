@@ -367,6 +367,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .project-dossier h2 { margin: 0 0 4px; font-size: 20px; letter-spacing: 0; }
 .project-dossier > p { margin: 0 0 20px; color: #a7a7b3; font-size: 11px; }
 .project-dossier .dossier-summary { display: -webkit-box; overflow: hidden; margin-top: -9px; color: #858592; font-size: 10px; line-height: 1.65; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.dossier-cover { margin: 0 0 16px; overflow: hidden; aspect-ratio: 16 / 9; border: 1px solid rgba(255,255,255,.14); border-radius: 10px; background: #10111b; }
+.dossier-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .dossier-meta { display: flex; justify-content: space-between; padding-top: 10px; border-top: 1px solid rgba(255,255,255,.13); color: #7f7f8d; font: 8px var(--font-mono); }
 .dossier-link {
   width: 100%;
@@ -984,6 +986,14 @@ footer a:hover { color: #fff; }
   .planet-amber .planet-label, .planet-timu .planet-label { right: 0; }
   .planet-pizza .planet-label { left: 5%; }
   .project-dossier { bottom: 28px; width: calc(100% - 10vw); }
+  .project-dossier { display: grid; grid-template-columns: 112px minmax(0, 1fr); column-gap: 14px; padding: 16px; }
+  .project-dossier > * { grid-column: 1 / -1; }
+  .project-dossier .dossier-index { margin-bottom: 12px; }
+  .project-dossier .dossier-cover { grid-column: 1; grid-row: 2 / span 2; align-self: start; margin: 0; border-radius: 8px; }
+  .project-dossier .dossier-cover ~ h2, .project-dossier .dossier-cover ~ p { grid-column: 2; }
+  .project-dossier h2 { grid-column: 2; grid-row: 2; font-size: 17px; }
+  .project-dossier > p { grid-column: 2; grid-row: 3; margin: 0 0 14px; }
+  .project-dossier .dossier-meta { margin-top: 12px; }
   .about-actions { align-items: flex-start; flex-direction: column; }
   .about-portrait figcaption { font-size: 12px; }
   .resume-heading { display: grid; gap: 8px; }

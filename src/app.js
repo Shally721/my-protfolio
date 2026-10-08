@@ -11,6 +11,11 @@ const slideImageUrls = import.meta.glob('./assets/slides/**/*.png', {
   query: '?url',
   import: 'default',
 })
+const thumbUrls = import.meta.glob('./assets/thumbs/*.webp', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
 const mediaUrls = import.meta.glob('./assets/**/*.{png,mp4,mov}', {
   eager: true,
   query: '?url',
@@ -158,13 +163,14 @@ async function updateDossier(id) {
 function renderDossier() {
   const project = projects.find((item) => item.id === selectedProjectId)
   if (!project) return
-  dossier.innerHTML = `<div class="dossier-index">STAR ${project.index} / ${String(projects.length).padStart(2, '0')} · SELECTED</div><h2>${project.title}</h2><p>${localize(project, 'subtitle')}</p><p class="dossier-summary">${localize(project, 'summary')}</p><div class="dossier-meta"><span>${project.meta.split(' · ')[0]}</span><span>${project.pages} BOARDS</span></div><button class="dossier-link" data-project="${project.id}">${t('dossier.cta')} <span>↗</span></button>`
+  dossier.innerHTML = `<div class="dossier-index">STAR ${project.index} / ${String(projects.length).padStart(2, '0')} · SELECTED</div><h2>${project.title}</h2><p>${localize(project, 'subtitle')}</p>${thumbUrls[`./assets/thumbs/${project.id}.webp`] ? `<figure class="dossier-cover"><img src="${thumbUrls[`./assets/thumbs/${project.id}.webp`]}" alt="${getLang() === 'en' ? `${project.title} cover` : `${project.title} 封面`}" width="720" height="405"></figure>` : `<p class="dossier-summary">${localize(project, 'summary')}</p>`}<div class="dossier-meta"><span>${project.meta.split(' · ')[0]}</span><span>${project.pages} BOARDS</span></div><button class="dossier-link" data-project="${project.id}">${t('dossier.cta')} <span>↗</span></button>`
 }
 
 document.querySelectorAll('[data-star]').forEach((star) => {
   star.addEventListener('click', () => updateDossier(star.dataset.star))
 })
 
+Object.values(thumbUrls).forEach((url) => { const img = new Image(); img.src = url })
 placeStars()
 updateDossier('pizza')
 window.addEventListener('resize', placeStars)
