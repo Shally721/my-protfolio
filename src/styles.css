@@ -389,19 +389,23 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   position: absolute;
   z-index: 8;
   left: 50%;
-  bottom: 28px;
+  bottom: 26px;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0;
-  border: 0;
-  color: #777785;
-  background: none;
-  font: 8px var(--font-mono);
-  letter-spacing: .14em;
+  padding: 9px 10px 9px 20px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 999px;
+  color: #d6d6e2;
+  background: rgba(10,12,30,.45);
+  backdrop-filter: blur(6px);
+  font: 500 14px/1 var(--font-sans);
+  letter-spacing: .04em;
   transform: translateX(-50%);
+  transition: color .2s, border-color .2s, background .2s;
 }
-.scroll-cue i { color: #fff; font-style: normal; animation: scrollBounce 1.7s ease-in-out infinite; }
+.scroll-cue:hover, .scroll-cue:focus-visible { color: #fff; border-color: rgba(255,255,255,.5); background: rgba(20,24,60,.6); }
+.scroll-cue i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; color: #05050a; background: #f4f2ec; font-style: normal; font-size: 14px; animation: scrollBounce 1.7s ease-in-out infinite; }
 
 .section { position: relative; padding: 110px 5.8vw 130px; border-top: 1px solid var(--line); }
 .works { background: linear-gradient(180deg, #080914 0%, #0c0d19 100%); }
