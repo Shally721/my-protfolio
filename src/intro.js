@@ -109,7 +109,7 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
     .sort((a, b) => a.rx - b.rx)
   const RING_START = 1150
   const RING_SPREAD = 1000
-  rings.forEach(({ ellipse, rx, opacity }, index) => {
+  rings.forEach(({ ellipse, rx, opacity }) => {
     // Delay follows the ring's radius, so rings at the same distance light together.
     const reach = (rx - rings[0].rx) / (rings[rings.length - 1].rx - rings[0].rx)
     const delay = RING_START + reach * RING_SPREAD
@@ -118,14 +118,12 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
       { opacity: Math.min(1, opacity * 1.7), offset: 0.38 },
       { opacity },
     ], { duration: 900, delay, easing: 'ease-out' })
-    // While it lights up, each ring turns into place; neighbours turn opposite ways.
-    const base = getComputedStyle(ellipse).transform
-    const rest = base === 'none' ? '' : base
-    const turn = (index % 2 ? 1 : -1) * (30 - reach * 14)
+    // While it lights up, the dashes sweep along the ring's own path (the ellipse
+    // itself never moves), all in the same direction as the idle flow.
     run(ellipse, [
-      { transform: `${rest} rotate(${turn}deg)` },
-      { transform: rest || 'none' },
-    ], { duration: 1300, delay, easing: 'cubic-bezier(.2,.7,.25,1)' })
+      { strokeDashoffset: 34 - reach * 12 },
+      { strokeDashoffset: 0 },
+    ], { duration: 1400, delay, easing: 'cubic-bezier(.2,.7,.25,1)' })
   })
 
   // Background stars burst outward from the centre (drawn on the canvas).
