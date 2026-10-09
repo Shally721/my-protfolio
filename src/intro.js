@@ -79,11 +79,11 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
     { opacity: 0, transform: 'translate(-50%, 8px)' },
     { opacity: 1, transform: 'translate(-50%, 0)' },
   ], { duration: 500, delay: 150, easing: EASE_OUT, fill: 'both' })
-  const loaderOut = run(loader, [{ opacity: 1 }, { opacity: 0 }], { duration: 450, delay: 3100, easing: 'linear', fill: 'forwards' })
+  const loaderOut = run(loader, [{ opacity: 1 }, { opacity: 0 }], { duration: 450, delay: 3300, easing: 'linear', fill: 'forwards' })
   loaderOut?.addEventListener('finish', () => loader.remove())
 
   const counterStart = performance.now()
-  const counterDuration = 3200
+  const counterDuration = 3400
   let counterFrame
   const tickCounter = (now) => {
     const p = Math.min(1, (now - counterStart) / counterDuration)
@@ -99,16 +99,25 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
   const glowOpacity = getComputedStyle(glow).opacity
   run(glow, [{ opacity: 0 }, { opacity: 1, offset: 0.35 }, { opacity: glowOpacity }], { duration: 2000, delay: 1100, easing: 'ease-out' })
 
-  // ── 2 · the galaxy unfolds ───────────────────────────────────────────────
-  // One composited transform on the whole SVG (scaling 23 rings one by one forced
-  // a full repaint of the filtered SVG every frame, which is what stuttered).
+  // ── 2 · the galaxy appears ring by ring, inside out ───────────────────────
+  // Opacity only: each ring brightens a little past its resting level and settles,
+  // so a ripple of light travels outward from the centre.
   const vortex = galaxySystem.querySelector('.galaxy-vortex')
-  const vortexBase = getComputedStyle(vortex).transform
-  run(vortex, [
-    { transform: 'rotate(-150deg) scale(.04)', opacity: 0 },
-    { opacity: 1, offset: 0.25 },
-    { transform: vortexBase === 'none' ? 'none' : vortexBase, opacity: 1 },
-  ], { duration: 1900, delay: 1100, easing: 'cubic-bezier(.12,.82,.24,1)' })
+  run(vortex, [{ opacity: 0 }, { opacity: 1 }], { duration: 10, delay: 1150 })
+  const rings = [...vortex.querySelectorAll('ellipse')]
+    .map((ellipse) => ({ ellipse, rx: Number(ellipse.getAttribute('rx')), opacity: Number(getComputedStyle(ellipse).opacity) }))
+    .sort((a, b) => a.rx - b.rx)
+  const RING_START = 1150
+  const RING_SPREAD = 1500
+  rings.forEach(({ ellipse, rx, opacity }) => {
+    // Delay follows the ring's radius, so rings at the same distance light together.
+    const reach = (rx - rings[0].rx) / (rings[rings.length - 1].rx - rings[0].rx)
+    run(ellipse, [
+      { opacity: 0 },
+      { opacity: Math.min(1, opacity * 1.7), offset: 0.38 },
+      { opacity },
+    ], { duration: 900, delay: RING_START + reach * RING_SPREAD, easing: 'ease-out' })
+  })
 
   // Background stars burst outward from the centre (drawn on the canvas).
   startStarfield(performance.now() + 1150, 1700)
@@ -133,7 +142,7 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
           transform: `scale(${0.25 + 0.75 * reach})`,
         }
       })
-      const delay = 1850 + index * 120
+      const delay = 2250 + index * 120
       run(star, frames, { duration: 1150, delay, easing: 'cubic-bezier(.3,.6,.25,1)' })
       run(star.querySelector('.star-label'), [
         { opacity: 0, transform: 'translateY(6px)' },
@@ -145,7 +154,7 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
   run(galaxySystem.querySelector('.little-person'), [
     { opacity: 0, transform: 'translateY(14px) scale(.6)' },
     { opacity: 1, transform: 'none' },
-  ], { duration: 700, delay: 2500, easing: EASE_OUT })
+  ], { duration: 700, delay: 2800, easing: EASE_OUT })
   galaxySystem.querySelectorAll('.dust-star').forEach((dust, index) => {
     const base = getComputedStyle(dust).transform
     run(dust, [
@@ -157,7 +166,7 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
   // ── 5 · the interface arrives ────────────────────────────────────────────
   // Title: line one is written in left to right, then line two follows.
   const titleLines = document.querySelectorAll('.galaxy-title > span, .galaxy-title em')
-  const LINE_START = 2750
+  const LINE_START = 3050
   const LINE_DURATION = 850
   titleLines.forEach((line, index) => {
     run(line, [
