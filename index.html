@@ -7,6 +7,23 @@
     <meta name="theme-color" content="#05050a" />
     <title>江晓丽 · Interaction Designer</title>
     <link rel="stylesheet" href="src/styles.css?v=20260909-01" />
+    <script>
+      // Decide before first paint whether the opening sequence will play, so the
+      // galaxy doesn't flash in fully formed. Once per session; ?intro=1 replays.
+      (function () {
+        try {
+          var force = new URLSearchParams(location.search).get('intro') === '1'
+          var seen = false
+          try { seen = sessionStorage.getItem('xiaoli-intro-seen') === '1' } catch (e) {}
+          var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches
+          var home = !location.hash || location.hash === '#home'
+          if (!reduce && home && (force || !seen)) {
+            document.documentElement.classList.add('intro-pending')
+            setTimeout(function () { document.documentElement.classList.remove('intro-pending') }, 8000)
+          }
+        } catch (e) {}
+      })()
+    </script>
   </head>
   <body>
     <div class="site-shell">

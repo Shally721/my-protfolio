@@ -308,6 +308,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .galaxy-vortex g ellipse:nth-child(3n) { transform: rotate(-3.5deg); }
 .galaxy-vortex g ellipse:nth-child(4n) { stroke-width: 4; opacity: .4; }
 .galaxy-vortex g ellipse:nth-child(5n) { transform: rotate(5deg); }
+/* Idle rotation: the dashed rings keep flowing clockwise with the drifting stars */
+.galaxy-system.is-drifting .vortex-blue ellipse { animation: vortexIdle 70s linear infinite; }
+.galaxy-system.is-drifting .vortex-light ellipse { animation: vortexIdle 46s linear infinite; }
+.galaxy-system.is-drifting .vortex-warm ellipse { animation: vortexIdle 58s linear infinite; }
 .galaxy-system.is-rotating .galaxy-vortex { animation: vortexTilt 1.05s cubic-bezier(.45,.02,.18,1); }
 .galaxy-system.is-rotating .galaxy-vortex ellipse { animation: vortexFlow 1.05s cubic-bezier(.45,.02,.18,1); }
 .galaxy-system.is-rotating .galaxy-vortex g:nth-child(2) ellipse { animation-direction: reverse; }
@@ -885,6 +889,7 @@ footer a:hover { color: #fff; }
 @keyframes starGlow { 0%,100% { filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 20px var(--star-glow)) drop-shadow(0 0 42px rgba(255,216,92,.58)); } 50% { filter: drop-shadow(0 0 14px #fff) drop-shadow(0 0 34px var(--star-glow)) drop-shadow(0 0 66px rgba(255,216,92,.72)); } }
 @keyframes starRing { 0% { opacity: .8; transform: scale(.55); } 100% { opacity: 0; transform: scale(1.35); } }
 @keyframes radianceBloom { 0%,100% { opacity: .72; transform: translate(-50%,-50%) scale(.88); } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.13); } }
+@keyframes vortexIdle { to { stroke-dashoffset: -100; } }
 @keyframes vortexFlow { 0% { stroke-dashoffset: 0; opacity: .45; } 55% { opacity: .9; } 100% { stroke-dashoffset: -42; opacity: .58; } }
 @keyframes vortexTilt { 0%,100% { transform: rotate(-7deg) scale(1); } 48% { transform: rotate(-2deg) scale(1.018); } }
 @keyframes feedbackStarPulse { 0%,100% { filter: brightness(.9); } 50% { filter: brightness(1.45); } }
@@ -1213,4 +1218,68 @@ footer a:hover { color: #fff; }
   .project-pizza .project-media { aspect-ratio: 3024 / 1658; }
   .project-media-stack { gap: 7px; padding: 7px; }
   .project-media-stack img { border-radius: 11px; }
+}
+
+/* ── Opening sequence (src/intro.js) ─────────────────────────────────────── */
+.intro-pending .topbar,
+.intro-pending .hero-status,
+.intro-pending .galaxy-title,
+.intro-pending .hero-intro,
+.intro-pending .galaxy-vortex,
+.intro-pending .little-person,
+.intro-pending .dust-star,
+.intro-pending .work-star,
+.intro-pending .project-dossier,
+.intro-pending .scroll-cue,
+.intro-pending .cosmos-glow,
+.intro-pending .starfield { opacity: 0; }
+.intro-running .cosmos { cursor: pointer; }
+.intro-running .work-star { pointer-events: none; }
+
+.intro-seed {
+  position: absolute;
+  z-index: 12;
+  left: 50%;
+  top: 46%;
+  width: 46px;
+  aspect-ratio: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 26px var(--star-glow)) drop-shadow(0 0 60px rgba(120,140,255,.7));
+}
+.intro-seed i {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(50% 0,60% 38%,100% 50%,60% 62%,50% 100%,40% 62%,0 50%,40% 38%);
+  background: radial-gradient(circle, #fff 0 30%, var(--star-core) 45%, var(--star-warm) 100%);
+}
+.intro-shock {
+  position: absolute;
+  z-index: 11;
+  left: 50%;
+  top: 46%;
+  width: 40px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(220,228,255,.9);
+  border-radius: 50%;
+  box-shadow: 0 0 18px rgba(140,160,255,.6), inset 0 0 12px rgba(140,160,255,.4);
+  pointer-events: none;
+}
+.intro-shock--inner { border-color: rgba(255,229,138,.85); box-shadow: 0 0 22px rgba(255,216,92,.55); }
+.intro-loader {
+  position: absolute;
+  z-index: 12;
+  left: 50%;
+  bottom: 34px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  color: #b9bfe8;
+  font: 500 13px/1 var(--font-mono);
+  letter-spacing: .12em;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+.intro-loader__num { color: #fff; font-size: 15px; font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) {
+  .galaxy-system.is-drifting .galaxy-vortex ellipse { animation: none; }
 }

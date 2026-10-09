@@ -23,6 +23,7 @@ const copy = {
   'dossier.title': { zh: '点亮一个作品', en: 'Light up a project' },
   'dossier.body': { zh: '选择星河中的任意一颗星，查看项目介绍。', en: 'Pick any star in the galaxy to see what the project is about.' },
   'dossier.cta': { zh: '查看完整作品', en: 'View full case study' },
+  'intro.loading': { zh: '正在点亮星河', en: 'Lighting up the galaxy' },
   'scroll.text': { zh: '向下滑动，探索更多作品', en: 'Scroll to explore more work' },
   'scroll.label': { zh: '向下查看全部作品', en: 'Scroll down to all work' },
 

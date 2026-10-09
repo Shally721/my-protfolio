@@ -1,5 +1,6 @@
 import { defaultStarAngles, projectSlides, projects } from './data/projects.js'
 import { applyStaticCopy, getLang, localize, onLangChange, setLang, t } from './i18n.js'
+import { introPending, playIntro } from './intro.js'
 
 applyStaticCopy()
 document.querySelectorAll('[data-lang-option]').forEach((button) => {
@@ -136,6 +137,7 @@ function animateGalaxyTo(id) {
 }
 
 let selectedProjectId = null
+let orbitBusy = false
 
 async function updateDossier(id) {
   const project = projects.find((item) => item.id === id)
@@ -149,8 +151,10 @@ async function updateDossier(id) {
   })
   galaxySystem.classList.add('is-rotating')
   dossier.classList.add('is-changing')
+  orbitBusy = true
   await animateGalaxyTo(id)
   if (sequence !== motionSequence) return
+  orbitBusy = false
   galaxySystem.classList.remove('is-rotating')
   const selectedStar = document.querySelector(`[data-star="${id}"]`)
   selectedStar.classList.remove('is-traveling')
@@ -532,6 +536,8 @@ form.addEventListener('submit', (event) => {
   }, 650)
 })
 
+let starfieldIntro = null
+
 function initStarfield() {
   const canvas = document.getElementById('starfield')
   const context = canvas.getContext('2d')
@@ -556,12 +562,25 @@ function initStarfield() {
 
   const draw = (time = 0) => {
     context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
+    // During the intro every star starts at the galaxy centre and is thrown outward.
+    let spread = 1
+    let fade = 1
+    if (starfieldIntro) {
+      const p = Math.min(1, Math.max(0, (performance.now() - starfieldIntro.start) / starfieldIntro.duration))
+      spread = 1 - Math.pow(1 - p, 4)
+      fade = Math.min(1, p * 2.2)
+      if (p >= 1) starfieldIntro = null
+    }
+    const cx = canvas.clientWidth * 0.5
+    const cy = canvas.clientHeight * 0.47
     stars.forEach((star, index) => {
       const driftX = pointerX * star.depth * 4
       const driftY = pointerY * star.depth * 3
+      const x = cx + (star.x - cx) * spread
+      const y = cy + (star.y - cy) * spread
       context.beginPath()
-      context.fillStyle = `rgba(${index % 9 === 0 ? '103,120,255' : '255,255,255'},${star.alpha + Math.sin(time / 900 + index) * 0.08})`
-      context.arc(star.x + driftX, star.y + driftY, star.radius, 0, Math.PI * 2)
+      context.fillStyle = `rgba(${index % 9 === 0 ? '103,120,255' : '255,255,255'},${(star.alpha + Math.sin(time / 900 + index) * 0.08) * fade})`
+      context.arc(x + driftX, y + driftY, star.radius * (fade < 1 ? 1.6 - 0.6 * fade : 1), 0, Math.PI * 2)
       context.fill()
     })
     if (!reduceMotion) frame = requestAnimationFrame(draw)
@@ -583,6 +602,53 @@ function initStarfield() {
 }
 
 initStarfield()
+
+// ── Galaxy idle rotation ─────────────────────────────────────────────────────
+// After the intro the project stars drift slowly along their orbit. Hovering a
+// star pauses the drift so it's easy to click; clicking still spins the galaxy
+// fast to bring that star to the front (animateGalaxyTo), then the drift resumes.
+const DRIFT_DEGREES_PER_SECOND = 3.2
+let driftPaused = false
+let cosmosInView = true
+let driftActive = false
+let lastDriftTime = null
+
+function driftGalaxy(now) {
+  if (lastDriftTime !== null && !orbitBusy && !driftPaused && cosmosInView && !main.hidden && !document.hidden) {
+    const step = DRIFT_DEGREES_PER_SECOND * Math.min(64, now - lastDriftTime) / 1000
+    Object.keys(starAngles).forEach((key) => { starAngles[key] = (starAngles[key] + step) % 360 })
+    placeStars()
+  }
+  lastDriftTime = now
+  requestAnimationFrame(driftGalaxy)
+}
+
+function startGalaxyDrift() {
+  if (driftActive || reduceMotion) return
+  driftActive = true
+  galaxySystem.classList.add('is-drifting')
+  workStars.addEventListener('pointerover', (event) => { if (event.target.closest('[data-star]')) driftPaused = true })
+  workStars.addEventListener('pointerout', (event) => { if (event.target.closest('[data-star]')) driftPaused = false })
+  workStars.addEventListener('focusin', () => { driftPaused = true })
+  workStars.addEventListener('focusout', () => { driftPaused = false })
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => { cosmosInView = entry.isIntersecting }).observe(document.getElementById('home'))
+  }
+  requestAnimationFrame(driftGalaxy)
+}
+
+if (introPending() && !reduceMotion) {
+  playIntro({
+    galaxySystem,
+    orbitPoint,
+    starAngles,
+    startStarfield: (start, duration) => { starfieldIntro = { start, duration } },
+    loadingLabel: t('intro.loading'),
+  }).then(startGalaxyDrift)
+} else {
+  document.documentElement.classList.remove('intro-pending')
+  startGalaxyDrift()
+}
 
 function syncLanguageCopy() {
   const rating = readRating()
