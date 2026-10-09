@@ -55,7 +55,7 @@ function projectMediaMarkup(project) {
     const src = mediaUrls[media.src] || media.src
     const poster = mediaUrls[media.poster] || media.poster
     const mimeType = media.src.toLowerCase().endsWith('.mov') ? 'video/quicktime' : 'video/mp4'
-    return `<video class="project-media-video" autoplay muted loop playsinline preload="metadata" poster="${poster}"><source src="${src}" type="${mimeType}"></video>`
+    return `<video class="project-media-video" muted loop playsinline preload="none" poster="${poster}" data-play-in-view><source src="${src}" type="${mimeType}"></video>`
   }
   if (media.type === 'stack') {
     return `<div class="project-media-stack">${media.images.map((src, index) => `<img src="${mediaUrls[src] || src}" alt="${project.title}：${media.label} ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">`).join('')}</div>`
@@ -623,6 +623,19 @@ function driftGalaxy(now) {
   requestAnimationFrame(driftGalaxy)
 }
 
+// Card videos start only once the intro is over and the card is on screen,
+// so decoding never competes with the opening animation.
+let videoObserver = null
+function playVideosInView() {
+  const videos = document.querySelectorAll('video[data-play-in-view]')
+  if (!('IntersectionObserver' in window)) { videos.forEach((video) => video.play().catch(() => {})); return }
+  videoObserver ??= new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
+    if (isIntersecting) target.play().catch(() => {})
+    else target.pause()
+  }), { rootMargin: '200px 0px' })
+  videos.forEach((video) => videoObserver.observe(video))
+}
+
 function startGalaxyDrift() {
   if (driftActive || reduceMotion) return
   driftActive = true
@@ -644,10 +657,11 @@ if (introPending() && !reduceMotion) {
     starAngles,
     startStarfield: (start, duration) => { starfieldIntro = { start, duration } },
     loadingLabel: t('intro.loading'),
-  }).then(startGalaxyDrift)
+  }).then(() => { startGalaxyDrift(); playVideosInView() })
 } else {
   document.documentElement.classList.remove('intro-pending')
   startGalaxyDrift()
+  playVideosInView()
 }
 
 function syncLanguageCopy() {
@@ -669,6 +683,7 @@ onLangChange(() => {
     star.setAttribute('aria-label', t('works.starLabel', { title: project.title }))
   })
   renderGrid()
+  if (!document.documentElement.classList.contains('intro-running')) playVideosInView()
   renderDossier()
   if (renderedDetailId && !detailView.hidden) renderDetail(renderedDetailId, { keepScroll: true })
   syncLanguageCopy()

@@ -79,7 +79,7 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
     { opacity: 0, transform: 'translate(-50%, 8px)' },
     { opacity: 1, transform: 'translate(-50%, 0)' },
   ], { duration: 500, delay: 150, easing: EASE_OUT, fill: 'both' })
-  const loaderOut = run(loader, [{ opacity: 1 }, { opacity: 0 }], { duration: 450, delay: 3300, easing: 'linear', fill: 'forwards' })
+  const loaderOut = run(loader, [{ opacity: 1 }, { opacity: 0 }], { duration: 450, delay: 3100, easing: 'linear', fill: 'forwards' })
   loaderOut?.addEventListener('finish', () => loader.remove())
 
   const counterStart = performance.now()
@@ -99,25 +99,16 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
   const glowOpacity = getComputedStyle(glow).opacity
   run(glow, [{ opacity: 0 }, { opacity: 1, offset: 0.35 }, { opacity: glowOpacity }], { duration: 2000, delay: 1100, easing: 'ease-out' })
 
-  // ── 2 · the galaxy unfolds, ring by ring, inside out ──────────────────────
+  // ── 2 · the galaxy unfolds ───────────────────────────────────────────────
+  // One composited transform on the whole SVG (scaling 23 rings one by one forced
+  // a full repaint of the filtered SVG every frame, which is what stuttered).
   const vortex = galaxySystem.querySelector('.galaxy-vortex')
+  const vortexBase = getComputedStyle(vortex).transform
   run(vortex, [
-    { transform: 'rotate(-48deg) scale(.86)' },
-    { transform: getComputedStyle(vortex).transform },
-  ], { duration: 2300, delay: 1100, easing: EASE_OUT })
-
-  const rings = [...vortex.querySelectorAll('ellipse')]
-    .map((ellipse) => ({ ellipse, rx: Number(ellipse.getAttribute('rx')) }))
-    .sort((a, b) => a.rx - b.rx)
-  rings.forEach(({ ellipse }, index) => {
-    const style = getComputedStyle(ellipse)
-    const base = style.transform === 'none' ? 'rotate(0deg)' : style.transform
-    run(ellipse, [
-      { transform: 'rotate(-80deg) scale(.06)', opacity: 0 },
-      { opacity: style.opacity, offset: 0.55 },
-      { transform: base, opacity: style.opacity },
-    ], { duration: 1400, delay: 1150 + index * 52, easing: EASE_OUT })
-  })
+    { transform: 'rotate(-150deg) scale(.04)', opacity: 0 },
+    { opacity: 1, offset: 0.25 },
+    { transform: vortexBase === 'none' ? 'none' : vortexBase, opacity: 1 },
+  ], { duration: 1900, delay: 1100, easing: 'cubic-bezier(.12,.82,.24,1)' })
 
   // Background stars burst outward from the centre (drawn on the canvas).
   startStarfield(performance.now() + 1150, 1700)
@@ -164,13 +155,17 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
   })
 
   // ── 5 · the interface arrives ────────────────────────────────────────────
+  // Title: line one is written in left to right, then line two follows.
   const titleLines = document.querySelectorAll('.galaxy-title > span, .galaxy-title em')
+  const LINE_START = 2750
+  const LINE_DURATION = 850
   titleLines.forEach((line, index) => {
     run(line, [
-      { clipPath: 'inset(100% -10% -40% -10%)', transform: 'translateY(.45em)', opacity: 0 },
-      { clipPath: 'inset(-30% -10% -40% -10%)', transform: 'translateY(0)', opacity: 1 },
-    ], { duration: 900, delay: 2800 + index * 170, easing: EASE_OUT })
+      { clipPath: 'inset(-30% 100% -40% -4%)', transform: 'translateX(-18px)', opacity: 0.2 },
+      { clipPath: 'inset(-30% -10% -40% -4%)', transform: 'translateX(0)', opacity: 1 },
+    ], { duration: LINE_DURATION, delay: LINE_START + index * (LINE_DURATION - 60), easing: 'cubic-bezier(.33,0,.15,1)' })
   })
+  const AFTER_TITLE = LINE_START + titleLines.length * (LINE_DURATION - 60)
   const rise = (selector, delay, distance = 16) => document.querySelectorAll(selector).forEach((el) => {
     const base = getComputedStyle(el).transform
     const rest = base === 'none' ? '' : base
@@ -182,11 +177,11 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
   run(document.querySelector('.topbar'), [
     { opacity: 0, transform: 'translateY(-100%)' },
     { opacity: 1, transform: 'translateY(0)' },
-  ], { duration: 800, delay: 3150, easing: EASE_OUT })
-  rise('.hero-status', 3250, -10)
-  rise('.hero-intro', 3350)
-  rise('.project-dossier', 3450, 24)
-  rise('.scroll-cue', 3700, 10)
+  ], { duration: 800, delay: AFTER_TITLE - 250, easing: EASE_OUT })
+  rise('.hero-status', AFTER_TITLE - 150, -10)
+  rise('.hero-intro', AFTER_TITLE)
+  rise('.project-dossier', AFTER_TITLE + 100, 24)
+  rise('.scroll-cue', AFTER_TITLE + 300, 10)
 
   // Everything is staged with fill:'backwards', so the guard class can go.
   root.classList.remove('intro-pending')

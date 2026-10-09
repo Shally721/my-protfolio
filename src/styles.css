@@ -1235,6 +1235,8 @@ footer a:hover { color: #fff; }
 .intro-pending .starfield { opacity: 0; }
 .intro-running .cosmos { cursor: pointer; }
 .intro-running .work-star { pointer-events: none; }
+/* Give the moving pieces their own compositor layers while the intro plays */
+.intro-running .galaxy-vortex, .intro-running .cosmos-glow, .intro-running .work-star, .intro-running .galaxy-title > span, .intro-running .galaxy-title em, .intro-seed, .intro-shock { will-change: transform, opacity; }
 
 .intro-seed {
   position: absolute;
