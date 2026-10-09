@@ -108,15 +108,24 @@ export function playIntro({ galaxySystem, orbitPoint, starAngles, startStarfield
     .map((ellipse) => ({ ellipse, rx: Number(ellipse.getAttribute('rx')), opacity: Number(getComputedStyle(ellipse).opacity) }))
     .sort((a, b) => a.rx - b.rx)
   const RING_START = 1150
-  const RING_SPREAD = 1500
-  rings.forEach(({ ellipse, rx, opacity }) => {
+  const RING_SPREAD = 1000
+  rings.forEach(({ ellipse, rx, opacity }, index) => {
     // Delay follows the ring's radius, so rings at the same distance light together.
     const reach = (rx - rings[0].rx) / (rings[rings.length - 1].rx - rings[0].rx)
+    const delay = RING_START + reach * RING_SPREAD
     run(ellipse, [
       { opacity: 0 },
       { opacity: Math.min(1, opacity * 1.7), offset: 0.38 },
       { opacity },
-    ], { duration: 900, delay: RING_START + reach * RING_SPREAD, easing: 'ease-out' })
+    ], { duration: 900, delay, easing: 'ease-out' })
+    // While it lights up, each ring turns into place; neighbours turn opposite ways.
+    const base = getComputedStyle(ellipse).transform
+    const rest = base === 'none' ? '' : base
+    const turn = (index % 2 ? 1 : -1) * (30 - reach * 14)
+    run(ellipse, [
+      { transform: `${rest} rotate(${turn}deg)` },
+      { transform: rest || 'none' },
+    ], { duration: 1300, delay, easing: 'cubic-bezier(.2,.7,.25,1)' })
   })
 
   // Background stars burst outward from the centre (drawn on the canvas).
