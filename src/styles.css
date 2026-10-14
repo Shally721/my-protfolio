@@ -719,6 +719,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 /* English version: LinkedIn instead of WeChat */
 .contact-linkedin { text-decoration: none; }
 :lang(zh-CN) .contact-linkedin { display: none; }
+:lang(zh-CN) .contact-phone-it, :lang(en) .contact-phone-cn { display: none; }
 :lang(en) .contact-wechat, :lang(en) .wechat-card { display: none; }
 :lang(en) .contact-channel-grid { grid-template-columns: minmax(250px, 1fr); }
 .wechat-card img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: #fff; }
