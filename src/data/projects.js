@@ -69,3 +69,13 @@ export const defaultStarAngles = Object.fromEntries(projects.map((project, index
   project.id,
   Number.isFinite(project.orbitAngle) ? project.orbitAngle : (90 + index * 360 / projects.length) % 360,
 ]))
+
+// English boards (shown when the site is switched to EN). Files live in
+// assets/slides-en/<project>/NN.webp; titles are only used for alt text.
+export const projectSlidesEn = {
+  pizza: [['01',"Global Pizza Camp"],'video',['02',"Business Goals"],['03',"Competitive Analysis"],['04',"Cross-Industry References"],['05',"Design Explorations"],['06',"Pizza-Box Metaphor"],['07',"Interaction Flow"],['08',"Mystery-Box Exploration"],['09',"Box Transition"],['10',"Infinite Canvas"],['11',"Leaderboard Strategy"],['12',"Pizza Upload"],['13',"Reports & Sharing"],['14',"Business Value"],['15',"Project Outcome"]],
+  ifa: [['01',"IFA Berlin 2026"],['02',"The Challenge"],['03',"Design Goals"],['04',"Scenario Insights"],['05',"Design Directions"],['06',"Experience Flow"],['07',"Four-Screen Onboarding"],['08',"Eight-Persona Play"],['09',"A Life Already in Motion"],['10',"Live Activity"],['11',"Layered Reports"],['12',"Outcomes and Lessons"]],
+  components: [['01',"Odyss Components"],['02',"Buttons & Toast"],['03',"Alerts"]],
+  amber: [['01',"Board 1"],['02',"Board 2"],['03',"Board 3"],['04',"Board 4"],['05',"Board 5"],['06',"Board 6"],['07',"Board 7"],['08',"Board 8"],['09',"Board 9"],['10',"Board 10"],['11',"Board 11"],['12',"FLOW B-2"],['13',"Board 13"],['14',"Personal Emotional Markers"],['15',"Board 15"],['16',"Board 16"],['17',"Board 17"],['18',"Memory Details and Sharing"],['19',"Sharing and Memory Archive"],['20',"Solo Revisit"],['21',"Duo Revisit"],['22',"Emotion-Led Place Discovery"]],
+  timu: [['01',"Board 1"],['02',"Board 2"],['03',"Board 3"],['04',"Board 4"],['05',"Board 5"],['06',"Board 6"],['07',"Board 7"],['08',"Board 8"],['09',"Board 9"],['10',"Board 10"],['11',"Board 11"],['12',"Board 12"],['13',"Board 13"],['14',"Board 14"],['15',"AI Workflow"],['16',"User Testing"]],
+}

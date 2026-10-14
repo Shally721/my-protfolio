@@ -1,4 +1,4 @@
-import { defaultStarAngles, projectSlides, projects } from './data/projects.js'
+import { defaultStarAngles, projectSlides, projectSlidesEn, projects } from './data/projects.js'
 import { applyStaticCopy, getLang, localize, onLangChange, setLang, t } from './i18n.js'
 import { introPending, playIntro } from './intro.js'
 
@@ -8,6 +8,11 @@ document.querySelectorAll('[data-lang-option]').forEach((button) => {
 })
 
 const slideImageUrls = import.meta.glob('./assets/slides/**/*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+const enSlideUrls = import.meta.glob('./assets/slides-en/**/*.webp', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -202,15 +207,19 @@ let renderedDetailId = null
 function renderDetail(id, { keepScroll = false } = {}) {
   const project = projects.find((item) => item.id === id)
   if (!project) return
-  detailView.classList.toggle('is-component-detail', id === 'components')
-  const slides = projectSlides[id] || []
+  const useEnglish = getLang() === 'en' && Boolean(projectSlidesEn[id])
+  detailView.classList.toggle('is-component-detail', id === 'components' && !useEnglish)
+  const videoSlide = (projectSlides[id] || []).find((slide) => !Array.isArray(slide))
+  const slides = useEnglish
+    ? projectSlidesEn[id].map((slide) => (slide === 'video' ? videoSlide : slide)).filter(Boolean)
+    : projectSlides[id] || []
   const slideMarkup = slides.map((slide, index) => {
     if (!Array.isArray(slide)) return renderVideoSlide(project, slide, index, slides.length)
     const [file, title] = slide
-    const imagePath = file.includes('/')
-      ? `./assets/${file}.png`
-      : `./assets/slides/${id}/${file}.png`
-    const imageUrl = slideImageUrls[imagePath] || mediaUrls[imagePath]
+    const imagePath = useEnglish
+      ? `./assets/slides-en/${id}/${file}.webp`
+      : file.includes('/') ? `./assets/${file}.png` : `./assets/slides/${id}/${file}.png`
+    const imageUrl = useEnglish ? enSlideUrls[imagePath] : slideImageUrls[imagePath] || mediaUrls[imagePath]
     if (!imageUrl) {
       return `<div class="detail-empty"><strong>${t('detail.missing', { n: index + 1 })}</strong><span>${title}</span></div>`
     }
