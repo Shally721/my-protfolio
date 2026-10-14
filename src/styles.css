@@ -716,6 +716,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .contact-links span { color: #7180ff; }
 .contact-channel-grid > small { position: absolute; left: 0; bottom: -22px; min-height: 16px; color: #c9ff4e; font: 9px var(--font-mono); }
 .wechat-card { grid-column: 2; grid-row: 1 / span 2; align-self: end; width: 172px; aspect-ratio: 1; margin: 0; padding: 10px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.055); }
+/* English version: LinkedIn instead of WeChat */
+.contact-linkedin { text-decoration: none; }
+:lang(zh-CN) .contact-linkedin { display: none; }
+:lang(en) .contact-wechat, :lang(en) .wechat-card { display: none; }
+:lang(en) .contact-channel-grid { grid-template-columns: minmax(250px, 1fr); }
 .wechat-card img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: #fff; }
 .contact-form { display: grid; gap: 28px; align-content: center; }
 .contact-form label { display: grid; gap: 9px; color: #777784; font: 9px var(--font-mono); letter-spacing: .09em; }
