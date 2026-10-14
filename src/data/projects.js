@@ -4,7 +4,7 @@ export const projects = [
     summary: '用「披萨盒盲盒」做探索入口，配合无限画布与冷启动排行，把 AI 饮食项链品牌讲成一段从探索、表态到留资的旅程；核心框架已被官网沿用。',
     tags: ['0→1 概念设计', '视觉与交互表现', '全链路交互设计', '国际化'], meta: '2026 · WEB + MOBILE', pages: 16, orbitAngle: 90,
     media: { type: 'video', src: './assets/pizza-demo-web.mp4', poster: './assets/pizza-cover.png', label: 'Pizza 交互录屏' },
-    liveUrl: 'https://pizza-test.odyss.life/',
+    liveUrl: 'https://pizza.odyss.life/',
     en: {
       subtitle: 'Global Pizza Camps marketing site (internship project)',
       summary: 'A “pizza-box blind box” as the way in, with an infinite canvas and cold-start rankings, turns an AI dietary-necklace brand into a journey from exploring to taking sides to signing up. The core framework was carried into the official site.',
