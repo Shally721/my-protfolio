@@ -53,6 +53,7 @@ const copy = {
   'about.focus1': { zh: '情感洞察', en: 'Emotional insight' },
   'about.focus2': { zh: '商业思维', en: 'Business thinking' },
   'about.focus3': { zh: 'AI 全链路', en: 'End-to-end AI workflow' },
+  'about.cvHref': { zh: 'jiang-xiaoli-cv.pdf', en: 'Xiaoli_Jiang-CV.pdf' },
   'about.cv': { zh: '查看完整简历 <span>↗</span>', en: 'View full CV <span>↗</span>' },
 
   'exp.company': { zh: '深圳市心感智影科技有限公司', en: 'ODYSS · Shenzhen Xinganzhiying Technology' },
