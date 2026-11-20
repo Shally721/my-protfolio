@@ -741,6 +741,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .contact-rating { display: grid; gap: 10px; padding: 4px 0 15px; border-bottom: 1px solid rgba(255,255,255,.3); }
 .contact-rating .contact-rating-kicker { margin: 0; color: #8c97ff; font: 9px var(--font-mono); letter-spacing: .14em; }
 .contact-rating h3 { max-width: 520px; margin: 2px 0 10px; color: #f5f2e9; font-size: clamp(21px, 1.9vw, 29px); font-weight: 300; line-height: 1.45; letter-spacing: -.025em; }
+.contact-rating h3 em { color: #7481ff; font-style: normal; }
+/* Match the display face of "The next orbit" on the left */
+:lang(en) .contact-rating h3 { font-family: 'Valky', var(--font-sans); font-size: clamp(30px, 2.7vw, 42px); line-height: 1.12; letter-spacing: 0; }
 .contact-rating .rating-stars { justify-content: flex-start; gap: 10px; }
 .contact-rating .rating-stars button { width: 38px; color: var(--star-warm); font-size: 38px; }
 .contact-rating .rating-stars button:hover, .contact-rating .rating-stars button:focus-visible { color: var(--star-core); text-shadow: 0 0 20px rgba(255,216,92,.55); }
