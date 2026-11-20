@@ -95,7 +95,7 @@ const copy = {
   'copy.success': { zh: '{label}已复制到剪贴板', en: '{label} copied to clipboard' },
   'copy.fail': { zh: '复制失败，请手动复制：{value}', en: 'Couldn’t copy. Please copy it manually: {value}' },
 
-  'rating.heading': { zh: '看完之后，<br />为这片星河留一颗星。', en: 'Before you go,<br /><em>leave a star in this galaxy.</em>' },
+  'rating.heading': { zh: '看完之后，<br /><em>为这片星河留一颗星。</em>', en: 'Before you go,<br /><em>leave a star in this galaxy.</em>' },
   'rating.groupLabel': { zh: '为作品集评分，满分五星', en: 'Rate this portfolio out of five stars' },
   'rating.star': { zh: '{n} 星', en: '{n} star' },
   'rating.stars': { zh: '{n} 星', en: '{n} stars' },
