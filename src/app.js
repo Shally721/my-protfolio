@@ -65,7 +65,8 @@ function projectMediaMarkup(project) {
   if (media.type === 'stack') {
     return `<div class="project-media-stack">${media.images.map((src, index) => `<img src="${mediaUrls[src] || src}" alt="${project.title}：${media.label} ${index + 1}" loading="${index === 0 ? 'eager' : 'lazy'}">`).join('')}</div>`
   }
-  return `<img class="project-media-image" src="${mediaUrls[media.src] || media.src}" alt="${getLang() === 'en' ? `${project.title} cover` : `${project.title}：${media.label}`}" loading="lazy">`
+  const imageSrc = getLang() === 'en' && media.srcEn ? enSlideUrls[media.srcEn] : mediaUrls[media.src] || media.src
+  return `<img class="project-media-image" src="${imageSrc}" alt="${getLang() === 'en' ? `${project.title} cover` : `${project.title}：${media.label}`}" loading="lazy">`
 }
 
 function renderGrid() {
@@ -172,7 +173,8 @@ async function updateDossier(id) {
 function renderDossier() {
   const project = projects.find((item) => item.id === selectedProjectId)
   if (!project) return
-  dossier.innerHTML = `<div class="dossier-index">STAR ${project.index} / ${String(projects.length).padStart(2, '0')} · SELECTED</div><h2>${project.title}</h2><p>${localize(project, 'subtitle')}</p>${thumbUrls[`./assets/thumbs/${project.id}.webp`] ? `<figure class="dossier-cover"><img src="${thumbUrls[`./assets/thumbs/${project.id}.webp`]}" alt="${getLang() === 'en' ? `${project.title} cover` : `${project.title} 封面`}" width="720" height="405"></figure>` : `<p class="dossier-summary">${localize(project, 'summary')}</p>`}<div class="dossier-meta"><span>${project.meta.split(' · ')[0]}</span><span>${project.pages} BOARDS</span></div><button class="dossier-link" data-project="${project.id}">${t('dossier.cta')} <span>↗</span></button>`
+  const thumb = (getLang() === 'en' && thumbUrls[`./assets/thumbs/${project.id}-en.webp`]) || thumbUrls[`./assets/thumbs/${project.id}.webp`]
+  dossier.innerHTML = `<div class="dossier-index">STAR ${project.index} / ${String(projects.length).padStart(2, '0')} · SELECTED</div><h2>${project.title}</h2><p>${localize(project, 'subtitle')}</p>${thumb ? `<figure class="dossier-cover"><img src="${thumb}" alt="${getLang() === 'en' ? `${project.title} cover` : `${project.title} 封面`}" width="720" height="405"></figure>` : `<p class="dossier-summary">${localize(project, 'summary')}</p>`}<div class="dossier-meta"><span>${project.meta.split(' · ')[0]}</span><span>${project.pages} BOARDS</span></div><button class="dossier-link" data-project="${project.id}">${t('dossier.cta')} <span>↗</span></button>`
 }
 
 document.querySelectorAll('[data-star]').forEach((star) => {

@@ -15,7 +15,7 @@ export const projects = [
     id: 'ifa', index: '02', title: 'ODYSS × IFA 2026', subtitle: '智能项链德国 IFA 展会沉浸式 Demo',
     summary: '为 ODYSS 智能项链设计 IFA 2026 展会 Demo：用 8 个真实生活角色替代繁琐建档，配合预填充数据与锁屏 Live Activity，让观众在 5 分钟内体验无感饮食追踪的完整价值。',
     tags: ['系统思维', '叙事设计', '全链路交互设计'], meta: '2026 · IFA BERLIN · APP DEMO', pages: 12, orbitAngle: 30,
-    media: { type: 'image', src: './assets/slides/ifa/01-cover.png', label: 'ODYSS × IFA 2026 项目封面', ratio: '3840 / 2160' },
+    media: { type: 'image', src: './assets/slides/ifa/01-cover.png', srcEn: './assets/slides-en/ifa/01.webp', label: 'ODYSS × IFA 2026 项目封面', ratio: '3840 / 2160' },
     en: {
       subtitle: 'Immersive booth demo for an AI necklace at IFA Berlin',
       summary: 'An IFA 2026 booth demo for the ODYSS smart necklace: eight real-life personas replace lengthy onboarding, while pre-filled data and a lock-screen Live Activity let visitors experience effortless food tracking within five minutes.',
@@ -48,7 +48,7 @@ export const projects = [
     id: 'timu', index: '05', title: 'Meet Timu', subtitle: '变色龙健康习惯伴侣',
     summary: '用光呼吸代替通知，用城堡崩塌对抗拖延，让健康习惯成为看得见的成就。',
     tags: ['AIGC 工作流', '情感设计', '0→1 概念设计', '软硬件协同'], meta: '2025—2026 · PRODUCT + DEVICE', pages: 16, orbitAngle: 210,
-    media: { type: 'image', src: './assets/slides/timu/01-715.png', label: 'Meet Timu 项目封面', ratio: '3840 / 2160' },
+    media: { type: 'image', src: './assets/slides/timu/01-715.png', srcEn: './assets/slides-en/timu/01.webp', label: 'Meet Timu 项目封面', ratio: '3840 / 2160' },
     en: {
       subtitle: 'A chameleon companion for healthy habits',
       summary: 'Breathing light instead of notifications, a crumbling castle against procrastination — making healthy habits a visible achievement.',
