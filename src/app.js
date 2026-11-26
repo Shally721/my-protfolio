@@ -41,10 +41,27 @@ let motionSequence = 0
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
 
-const totalBoards = projects.reduce((total, project) => total + project.pages, 0)
-document.getElementById('projectStats').textContent = `${projects.length} PROJECTS · ${totalBoards} BOARDS`
-document.getElementById('dossierProjectCount').textContent = `${projects.length} PROJECTS`
-document.getElementById('dossierBoardCount').textContent = `${totalBoards} BOARDS`
+// Some projects are only shown in one language (e.g. City Amber is hidden in English).
+const isProjectVisible = (project) => !(project.hideIn || []).includes(getLang())
+const visibleProjects = () => projects.filter(isProjectVisible)
+const displayIndex = (project) => String(visibleProjects().indexOf(project) + 1).padStart(2, '0')
+
+function syncProjectVisibility() {
+  const list = visibleProjects()
+  const totalBoards = list.reduce((total, project) => total + project.pages, 0)
+  const projectStatsEl = document.getElementById('projectStats')
+  if (projectStatsEl) projectStatsEl.textContent = `${list.length} PROJECTS · ${totalBoards} BOARDS`
+  const dossierProjectCountEl = document.getElementById('dossierProjectCount')
+  if (dossierProjectCountEl) dossierProjectCountEl.textContent = `${list.length} PROJECTS`
+  const dossierBoardCountEl = document.getElementById('dossierBoardCount')
+  if (dossierBoardCountEl) dossierBoardCountEl.textContent = `${totalBoards} BOARDS`
+  workStars?.querySelectorAll('[data-star]').forEach((star) => {
+    const project = projects.find((item) => item.id === star.dataset.star)
+    star.hidden = !isProjectVisible(project)
+    const number = star.querySelector('.star-label b')
+    if (number && !star.hidden) number.textContent = displayIndex(project)
+  })
+}
 
 workStars.innerHTML = projects.map((project) => `
   <button class="work-star star-${project.id}" data-star="${project.id}" aria-pressed="false" aria-label="${t('works.starLabel', { title: project.title })}">
@@ -52,6 +69,7 @@ workStars.innerHTML = projects.map((project) => `
     <span class="star-label"><b>${project.index}</b><span>${project.title.toUpperCase()}</span></span>
   </button>
 `).join('')
+syncProjectVisibility()
 
 function projectMediaMarkup(project) {
   const media = project.media
@@ -70,7 +88,7 @@ function projectMediaMarkup(project) {
 }
 
 function renderGrid() {
-grid.innerHTML = projects.map((project) => `
+grid.innerHTML = visibleProjects().map((project) => `
   <article class="project-row project-${project.id}">
     <div class="project-row-copy">
       <p class="project-meta">${project.meta} · ${project.pages} PAGES</p>
@@ -82,7 +100,7 @@ grid.innerHTML = projects.map((project) => `
       ${project.liveUrl ? `<div class="project-live-entry"><p>${t('works.liveInvite')}</p><a href="${project.liveUrl}" target="_blank" rel="noreferrer">${t('works.liveCta')} <span class="entry-star" aria-hidden="true"><span class="entry-star-core"></span></span></a></div>` : ''}
     </div>
     <button class="project-media${project.media?.ratio ? ' project-media--fitted' : ''}" data-project="${project.id}" aria-label="${t('works.mediaLabel', { title: project.title })}"${project.media?.ratio ? ` style="aspect-ratio: ${project.media.ratio}"` : ''}>
-      <span class="project-media-index">${project.index}</span>
+      <span class="project-media-index">${displayIndex(project)}</span>
       ${projectMediaMarkup(project)}
       <span class="project-media-overlay">EXPLORE CASE STUDY <b>↗</b></span>
     </button>
@@ -170,11 +188,21 @@ async function updateDossier(id) {
   dossier.classList.remove('is-changing')
 }
 
+const dossierDefaultMarkup = dossier.innerHTML
 function renderDossier() {
-  const project = projects.find((item) => item.id === selectedProjectId)
-  if (!project) return
+  const project = projects.find((item) => item.id === selectedProjectId && isProjectVisible(item))
+  if (!project) {
+    if (selectedProjectId) {
+      selectedProjectId = null
+      dossier.innerHTML = dossierDefaultMarkup
+      applyStaticCopy(dossier)
+      syncProjectVisibility()
+      document.querySelectorAll('[data-star]').forEach((star) => { star.setAttribute('aria-pressed', 'false'); star.classList.remove('is-active') })
+    }
+    return
+  }
   const thumb = (getLang() === 'en' && thumbUrls[`./assets/thumbs/${project.id}-en.webp`]) || thumbUrls[`./assets/thumbs/${project.id}.webp`]
-  dossier.innerHTML = `<div class="dossier-index">STAR ${project.index} / ${String(projects.length).padStart(2, '0')} · SELECTED</div><h2>${project.title}</h2><p>${localize(project, 'subtitle')}</p>${thumb ? `<figure class="dossier-cover"><img src="${thumb}" alt="${getLang() === 'en' ? `${project.title} cover` : `${project.title} 封面`}" width="720" height="405"></figure>` : `<p class="dossier-summary">${localize(project, 'summary')}</p>`}<div class="dossier-meta"><span>${project.meta.split(' · ')[0]}</span><span>${project.pages} BOARDS</span></div><button class="dossier-link" data-project="${project.id}">${t('dossier.cta')} <span>↗</span></button>`
+  dossier.innerHTML = `<div class="dossier-index">STAR ${displayIndex(project)} / ${String(visibleProjects().length).padStart(2, '0')} · SELECTED</div><h2>${project.title}</h2><p>${localize(project, 'subtitle')}</p>${thumb ? `<figure class="dossier-cover"><img src="${thumb}" alt="${getLang() === 'en' ? `${project.title} cover` : `${project.title} 封面`}" width="720" height="405"></figure>` : `<p class="dossier-summary">${localize(project, 'summary')}</p>`}<div class="dossier-meta"><span>${project.meta.split(' · ')[0]}</span><span>${project.pages} BOARDS</span></div><button class="dossier-link" data-project="${project.id}">${t('dossier.cta')} <span>↗</span></button>`
 }
 
 document.querySelectorAll('[data-star]').forEach((star) => {
@@ -239,7 +267,7 @@ function renderDetail(id, { keepScroll = false } = {}) {
     <section class="slide-deck" aria-label="${t('detail.deckLabel', { title: project.title })}">
       ${slides.length ? slideMarkup : `<div class="detail-empty"><strong>${t('detail.emptyTitle')}</strong><span>${t('detail.emptyBody')}</span></div>`}
     </section>
-    <div class="detail-bottom"><button class="detail-nav-button" data-back>${t('detail.back')}</button><div><strong>${project.title}</strong><span>${localize(project, 'subtitle')}</span></div><button class="space-button" data-next="${projects[(projects.findIndex((item) => item.id === id) + 1) % projects.length].id}">${t('detail.next')}</button></div>`
+    <div class="detail-bottom"><button class="detail-nav-button" data-back>${t('detail.back')}</button><div><strong>${project.title}</strong><span>${localize(project, 'subtitle')}</span></div><button class="space-button" data-next="${(() => { const list = visibleProjects(); return list[(list.findIndex((item) => item.id === id) + 1) % list.length].id })()}">${t('detail.next')}</button></div>`
   detailView.querySelectorAll('[data-back]').forEach((button) => button.addEventListener('click', () => { location.hash = 'works' }))
   detailView.querySelector('[data-next]').addEventListener('click', (event) => { location.hash = `project/${event.currentTarget.dataset.next}` })
   renderedDetailId = id
@@ -411,7 +439,7 @@ renderRatingState()
 
 function renderRoute() {
   const routeMatch = location.hash.match(/^#project\/([\w-]+)$/)
-  const match = routeMatch && projects.some((item) => item.id === routeMatch[1]) ? routeMatch : null
+  const match = routeMatch && visibleProjects().some((item) => item.id === routeMatch[1]) ? routeMatch : null
   document.querySelector('.site-shell')?.classList.toggle('is-detail-route', Boolean(match))
   if (match) {
     renderDetail(match[1])
@@ -693,9 +721,13 @@ onLangChange(() => {
     const project = projects.find((item) => item.id === star.dataset.star)
     star.setAttribute('aria-label', t('works.starLabel', { title: project.title }))
   })
+  syncProjectVisibility()
   renderGrid()
   if (!document.documentElement.classList.contains('intro-running')) playVideosInView()
   renderDossier()
-  if (renderedDetailId && !detailView.hidden) renderDetail(renderedDetailId, { keepScroll: true })
+  if (renderedDetailId && !detailView.hidden) {
+    if (visibleProjects().some((item) => item.id === renderedDetailId)) renderDetail(renderedDetailId, { keepScroll: true })
+    else location.hash = '#works'
+  }
   syncLanguageCopy()
 })
