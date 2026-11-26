@@ -34,7 +34,7 @@ export const projects = [
     },
   },
   {
-    id: 'amber', index: '04', title: 'City Amber', subtitle: '小红书城市情感记忆地图',
+    id: 'amber', index: '04', hideIn: ['en'], title: 'City Amber', subtitle: '小红书城市情感记忆地图',
     summary: '将城市里的情感瞬间变成可探索的地理坐标，打通情感留存与本地生活商业闭环。',
     tags: ['本地生活', '用研驱动决策', '业务增长导向', '创新设计'], meta: '2026 · PRODUCT CONCEPT', pages: 22, orbitAngle: 330,
     media: { type: 'image', src: './assets/amber-cover.png', label: 'City Amber 视觉方案', ratio: '2172 / 1442' },
